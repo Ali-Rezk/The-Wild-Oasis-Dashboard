@@ -8,6 +8,13 @@ import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./ui/AppLayout";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { staleTime: 1000 * 60 * 5, refetchOnWindowFocus: false },
+  },
+});
 
 const protectedRoutes = [
   { path: "dashboard", element: <Dashboard /> },
@@ -18,9 +25,11 @@ const protectedRoutes = [
   { path: "account", element: <Account /> },
 ];
 
+window.__TANSTACK_QUERY_CLIENT__ = queryClient;
+
 function App() {
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
           <Route element={<AppLayout />}>
@@ -34,7 +43,7 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </QueryClientProvider>
   );
 }
 
