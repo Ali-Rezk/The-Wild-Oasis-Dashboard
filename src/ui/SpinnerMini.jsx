@@ -1,12 +1,10 @@
 import { BiLoaderAlt } from "react-icons/bi";
 
-function SpinnerMini() {
+function SpinnerMini({ size = "w-10 h-10" }) {
   return (
     <BiLoaderAlt
-      className="animate-spin"
+      className={`animate-spin ${size} `}
       style={{
-        width: "2.4rem",
-        height: "2.4rem",
         animationDuration: "1.5s",
         animationTimingFunction: "linear",
       }}
