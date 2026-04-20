@@ -5,9 +5,7 @@ const TableContext = createContext();
 function Table({ columns, children }) {
   return (
     <TableContext.Provider value={{ columns }}>
-      <div
-        className="border border-grey-200 text-[1.4rem] bg-grey-0 rounded-[7px] overflow-hidden"
-      >
+      <div className="border border-grey-200 text-[1.4rem] bg-grey-0 rounded-[7px] overflow-hidden">
         {children}
       </div>
     </TableContext.Provider>
@@ -31,7 +29,7 @@ function Row({ children }) {
   const { columns } = useContext(TableContext);
   return (
     <div
-      className="grid items-center gap-x-[2.4rem] py-[1.2rem] px-[2.4rem] [&:not(:last-child)]:border-b [&:not(:last-child)]:border-grey-100"
+      className="grid items-center gap-x-[2.4rem] py-[1.2rem] px-[2.4rem] not-last:border-b not-last:border-grey-100"
       style={{ gridTemplateColumns: columns }}
       role="row"
     >
@@ -43,7 +41,10 @@ function Row({ children }) {
 function Body({ data, render }) {
   if (!data || data.length === 0)
     return (
-      <p className="text-[1.6rem] font-medium text-center" style={{ margin: "2.4rem" }}>
+      <p
+        className="text-[1.6rem] font-medium text-center"
+        style={{ margin: "2.4rem" }}
+      >
         No data to show at the moment
       </p>
     );

@@ -33,7 +33,7 @@ function Window({ children, name }) {
 
   return createPortal(
     <div
-      className="fixed inset-0 bg-[var(--backdrop-color)] backdrop-blur-[4px] z-[1000] transition-all duration-500"
+      className="fixed inset-0 bg-(--backdrop-color) backdrop-blur-xs z-1000 transition-all duration-500"
       onClick={close}
     >
       <div
