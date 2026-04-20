@@ -5,12 +5,11 @@ import CabinTable from "../features/cabins/CabinTable";
 function Cabins() {
   return (
     <>
-      <Row type="horizontal">
-        <Heading as="h1">All cabins</Heading>
-        <p>filter / sort</p>
-      </Row>
-
-      <Row type="horizontal">
+      <Row type="vertical">
+        <Row type="horizontal">
+          <Heading as="h1">All cabins</Heading>
+          <p>filter / sort</p>
+        </Row>
         <CabinTable />
       </Row>
     </>
