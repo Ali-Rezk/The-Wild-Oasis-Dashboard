@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCabin } from "../../services/apiCabin";
 import Spinner from "../../ui/Spinner";
 import SpinnerMini from "../../ui/SpinnerMini";
+import toast from "react-hot-toast";
 
 function CabinRow({ cabin }) {
   const queryClient = useQueryClient();
@@ -11,10 +12,11 @@ function CabinRow({ cabin }) {
     mutationFn: () => deleteCabin(cabin.id),
     onSuccess: () => {
       queryClient.invalidateQueries(["cabins"]);
+      toast.success("Cabin deleted successfully");
     },
     onError: (error) => {
       console.error(error);
-      alert("Unable to delete cabin");
+      toast.error("Unable to delete cabin");
     },
   });
 
