@@ -5,10 +5,14 @@ import { deleteCabin } from "../../services/apiCabin";
 import Spinner from "../../ui/Spinner";
 import SpinnerMini from "../../ui/SpinnerMini";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import CreateCabinForm from "./CreateCabinForm";
 
 function CabinRow({ cabin }) {
+  const [showForm, setShowForm] = useState(false);
+
   const queryClient = useQueryClient();
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: () => deleteCabin(cabin.id),
     onSuccess: () => {
       queryClient.invalidateQueries(["cabins"]);
@@ -47,6 +51,13 @@ function CabinRow({ cabin }) {
         </td>
         <td>
           <button
+            className="p-2 rounded text-blue-600 hover:bg-blue-50"
+            onClick={() => setShowForm(!showForm)}
+            disabled={isPending}
+          >
+            {<HiPencil className="w-5 h-5" />}
+          </button>
+          <button
             className="p-2 rounded text-red-600 hover:bg-red-50"
             onClick={() => mutate(cabin.id)}
             disabled={isPending}
@@ -59,6 +70,12 @@ function CabinRow({ cabin }) {
           </button>
         </td>
       </tr>
+      {showForm && (
+        <CreateCabinForm
+          cabin={cabin}
+          onCloseModal={() => setShowForm(false)}
+        />
+      )}
     </>
   );
 }

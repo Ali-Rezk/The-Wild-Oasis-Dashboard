@@ -1,15 +1,9 @@
-function FormRow({ label, error, children, orientation }) {
-  const isVertical = orientation === "vertical";
-
+function FormRow({ label, error, children }) {
   return (
     <div
-      className={`grid items-center ${
-        isVertical
-          ? "gap-[0.8rem]"
-          : "gap-[2.4rem] border-b border-grey-100 last:border-0"
-      } py-[1.2rem] first:pt-0 last:pb-0`}
+      className={`grid items-center gap-[2.4rem] border-b border-grey-100 last:border-0 py-[1.2rem] first:pt-0 last:pb-0`}
       style={{
-        gridTemplateColumns: isVertical ? "1fr" : "24rem 1fr 1.2fr",
+        gridTemplateColumns: "24rem 1fr 1.2fr",
       }}
     >
       {label && (
