@@ -2,8 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getCabins } from "../../services/apiCabin";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
+import { useState } from "react";
+import CreateCabinForm from "./CreateCabinForm";
 
 export default function CabinTable() {
+  const [showForm, setShowForm] = useState(false);
+  const [cabin, setCabin] = useState(null);
+
   const {
     data: cabins,
     error,
@@ -16,21 +21,34 @@ export default function CabinTable() {
   if (isLoading) return <Spinner />;
   if (error) return <p>Error: {error.message}</p>;
   return (
-    <table className="border border-grey-200 text-[1.4rem] bg-grey-0 rounded-[7px] overflow-hidden w-full">
-      <thead className="grid grid-cols-6 gap-x-10 items-center bg-grey-50 border-b border-grey-100 uppercase tracking-[0.4px] font-semibold text-grey-600 px-[2.4rem] py-[1.6rem]">
-        <tr>
-          <th className="col-span-2">Cabin</th>
-          <th>Capacity</th>
-          <th>Price</th>
-          <th>Discount</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <div>
-        {cabins.map((cabin) => (
-          <CabinRow cabin={cabin} key={cabin.id} />
-        ))}
-      </div>
-    </table>
+    <>
+      <table className="border border-grey-200 text-[1.4rem] bg-grey-0 rounded-[7px] overflow-hidden w-full">
+        <thead className="grid grid-cols-6 gap-x-10 items-center bg-grey-50 border-b border-grey-100 uppercase tracking-[0.4px] font-semibold text-grey-600 px-[2.4rem] py-[1.6rem]">
+          <tr>
+            <th className="col-span-2">Cabin</th>
+            <th>Capacity</th>
+            <th>Price</th>
+            <th>Discount</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cabins.map((cabin) => (
+            <CabinRow
+              cabin={cabin}
+              key={cabin.id}
+              setCabin={setCabin}
+              onUpdate={setShowForm}
+            />
+          ))}
+        </tbody>
+      </table>
+      {showForm && (
+        <CreateCabinForm
+          cabin={cabin}
+          onCloseModal={() => setShowForm(false)}
+        />
+      )}
+    </>
   );
 }

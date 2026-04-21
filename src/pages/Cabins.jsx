@@ -18,7 +18,9 @@ function Cabins() {
       <Button onClick={() => setShowCreateForm(!showCreateForm)}>
         Add new cabin
       </Button>
-      {showCreateForm && <CreateCabinForm />}
+      {showCreateForm && (
+        <CreateCabinForm onCloseModal={() => setShowCreateForm(false)} />
+      )}
     </Row>
   );
 }
