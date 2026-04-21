@@ -54,7 +54,11 @@ function CreateCabinForm({ onCloseModal, cabin }) {
   });
 
   function onSubmit(data) {
-    mutate({ ...data, image: data.image[0] });
+    const isImageString = typeof data.image === "string";
+    mutate(
+      { ...data, image: isImageString ? data.image : data.image[0] },
+      isEditMode ? cabin.id : undefined,
+    );
   }
 
   function onError(errors) {

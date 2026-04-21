@@ -22,15 +22,11 @@ export async function deleteCabin(id) {
 }
 
 export async function createEditCabin(newCabin, id) {
-  const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
-
   const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
     "/",
     "",
   );
-  const imagePath = hasImagePath
-    ? newCabin.image
-    : `${supabaseUrl}/storage/v1/object/public/cabins/${imageName}`;
+  const imagePath = `${supabaseUrl}/storage/v1/object/public/cabins/${imageName}`;
 
   // 1. Create/edit cabin
   let query = supabase.from("cabins");
@@ -49,15 +45,14 @@ export async function createEditCabin(newCabin, id) {
   }
 
   // 2. Upload image
-  if (hasImagePath) return data;
 
   const { error: storageError } = await supabase.storage
-    .from("cabin-images")
+    .from("cabins")
     .upload(imageName, newCabin.image);
 
   // 3. Delete the cabin IF there was an error uplaoding image
   if (storageError) {
-    await supabase.from("cabins").delete().eq("id", data.id);
+    await supabase.from("cabins").delete().eq("id", data[0].id);
     console.error(storageError);
     throw new Error(
       "Cabin image could not be uploaded and the cabin was not created",
@@ -66,3 +61,6 @@ export async function createEditCabin(newCabin, id) {
 
   return data;
 }
+
+("https://flhvpcybiprsfeiomssg.supabase.co/storage/v1/object/public/cabins/0.800205371197448-cabin-007.jpg");
+("https://flhvpcybiprsfeiomssg.supabase.co/storage/v1/object/public/cabins/0.8310248666453899-cabin-008.jpg");
