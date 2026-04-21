@@ -57,7 +57,7 @@ function CreateCabinForm({ onCloseModal, cabin }) {
     const isImageString = typeof data.image === "string";
     mutate(
       { ...data, image: isImageString ? data.image : data.image[0] },
-      isEditMode ? cabin.id : undefined,
+      isEditMode && cabin.id,
     );
   }
 
@@ -152,7 +152,13 @@ function CreateCabinForm({ onCloseModal, cabin }) {
           Cancel
         </Button>
         <Button type="submit" disabled={isPending}>
-          {isPending ? <SpinnerMini /> : "Add cabin"}
+          {isPending ? (
+            <SpinnerMini />
+          ) : isEditMode ? (
+            "Update cabin"
+          ) : (
+            "Add cabin"
+          )}
         </Button>
       </div>
     </Form>
