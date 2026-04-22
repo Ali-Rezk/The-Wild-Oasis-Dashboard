@@ -4,11 +4,9 @@ import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createEditCabin } from "../../services/apiCabin";
-import toast from "react-hot-toast";
 import SpinnerMini from "../../ui/SpinnerMini";
 import FormRow from "../../ui/FormRow";
+import { useCreateEditCabin } from "./cabinHooks";
 
 const defaultValues = {
   name: "",
@@ -21,7 +19,6 @@ const defaultValues = {
 
 function CreateCabinForm({ onCloseModal, cabin }) {
   const isEditMode = Boolean(cabin);
-  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -33,32 +30,19 @@ function CreateCabinForm({ onCloseModal, cabin }) {
     defaultValues: isEditMode ? cabin : defaultValues,
   });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: (data) =>
-      createEditCabin(data, isEditMode ? cabin.id : undefined),
-    onSuccess: () => {
-      toast.success(
-        isEditMode
-          ? "Cabin updated successfully"
-          : "Cabin created successfully",
-      );
-      queryClient.invalidateQueries(["cabins"]);
-      onCloseModal?.();
-    },
-    onError: (error) => {
-      console.error(error);
-      toast.error(
-        isEditMode ? "Unable to update cabin" : "Unable to create cabin",
-      );
-    },
-  });
+  const { mutate, isPending, isSuccess } = useCreateEditCabin(isEditMode);
 
   function onSubmit(data) {
     const isImageString = typeof data.image === "string";
-    mutate(
-      { ...data, image: isImageString ? data.image : data.image[0] },
-      isEditMode && cabin.id,
-    );
+    mutate({
+      ...data,
+      image: isImageString ? data.image : data.image[0],
+      id: isEditMode ? cabin.id : undefined,
+    });
+
+    if (isSuccess) {
+      onCloseModal();
+    }
   }
 
   function onError(errors) {

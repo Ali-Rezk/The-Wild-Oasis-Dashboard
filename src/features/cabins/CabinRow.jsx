@@ -1,25 +1,11 @@
 import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { formatCurrency } from "../../utils/helpers";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteCabin } from "../../services/apiCabin";
-import Spinner from "../../ui/Spinner";
 import SpinnerMini from "../../ui/SpinnerMini";
-import toast from "react-hot-toast";
 import CreateCabinForm from "./CreateCabinForm";
+import { useDeleteCabin } from "./cabinHooks";
 
 function CabinRow({ cabin, onUpdate, setCabin }) {
-  const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
-    mutationFn: () => deleteCabin(cabin.id),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["cabins"]);
-      toast.success("Cabin deleted successfully");
-    },
-    onError: (error) => {
-      console.error(error);
-      toast.error("Unable to delete cabin");
-    },
-  });
+  const { mutate: deleteCabin, isPending } = useDeleteCabin();
 
   return (
     <>
@@ -59,7 +45,7 @@ function CabinRow({ cabin, onUpdate, setCabin }) {
           </button>
           <button
             className="p-2 rounded text-red-600 hover:bg-red-50"
-            onClick={() => mutate(cabin.id)}
+            onClick={() => deleteCabin(cabin.id)}
             disabled={isPending}
           >
             {isPending ? (
