@@ -30,19 +30,23 @@ function CreateCabinForm({ onCloseModal, cabin }) {
     defaultValues: isEditMode ? cabin : defaultValues,
   });
 
-  const { mutate, isPending, isSuccess } = useCreateEditCabin(isEditMode);
+  const { mutate, isPending } = useCreateEditCabin(isEditMode);
 
   function onSubmit(data) {
     const isImageString = typeof data.image === "string";
-    mutate({
-      ...data,
-      image: isImageString ? data.image : data.image[0],
-      id: isEditMode ? cabin.id : undefined,
-    });
-
-    if (isSuccess) {
-      onCloseModal();
-    }
+    mutate(
+      {
+        ...data,
+        image: isImageString ? data.image : data.image[0],
+        id: isEditMode ? cabin.id : undefined,
+      },
+      {
+        onSuccess: () => {
+          reset();
+          onCloseModal();
+        },
+      },
+    );
   }
 
   function onError(errors) {
