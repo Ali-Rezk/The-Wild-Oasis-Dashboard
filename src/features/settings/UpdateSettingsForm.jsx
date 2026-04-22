@@ -6,7 +6,7 @@ import { useGetSettings, useUpdateSetting } from "./settingsHooks";
 
 function UpdateSettingsForm() {
   const { data: settings, isLoading, isError } = useGetSettings();
-  const { mutate } = useUpdateSetting();
+  const { mutate, isPending: isUpdating } = useUpdateSetting();
   if (isLoading) return <Spinner />;
   if (isError) return <p>Error loading settings</p>;
 
@@ -21,8 +21,7 @@ function UpdateSettingsForm() {
       )
     ) {
       mutate({ [settingName]: Number(newValue) });
-    }
-    {
+    } else {
       // Revert to original value if user cancels
       e.target.value = settings[settingName];
     }
@@ -33,6 +32,7 @@ function UpdateSettingsForm() {
         <Input
           type="number"
           id="minBookingLength"
+          disabled={isUpdating}
           defaultValue={settings.minBookingLength}
           onBlur={handleUpdateSetting}
         />
@@ -41,6 +41,7 @@ function UpdateSettingsForm() {
         <Input
           type="number"
           id="maxBookingLength"
+          disabled={isUpdating}
           defaultValue={settings.maxBookingLength}
           onBlur={handleUpdateSetting}
         />
@@ -49,6 +50,7 @@ function UpdateSettingsForm() {
         <Input
           type="number"
           id="maxPersonPerBooking"
+          disabled={isUpdating}
           defaultValue={settings.maxPersonPerBooking}
           onBlur={handleUpdateSetting}
         />
@@ -57,6 +59,7 @@ function UpdateSettingsForm() {
         <Input
           type="number"
           id="breakfastPrice"
+          disabled={isUpdating}
           defaultValue={settings.breakfastPrice}
           onBlur={handleUpdateSetting}
         />
