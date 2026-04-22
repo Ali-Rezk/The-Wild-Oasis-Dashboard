@@ -2,10 +2,20 @@ import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { formatCurrency } from "../../utils/helpers";
 import SpinnerMini from "../../ui/SpinnerMini";
 import CreateCabinForm from "./CreateCabinForm";
-import { useDeleteCabin } from "./cabinHooks";
+import { useCreateEditCabin, useDeleteCabin } from "./cabinHooks";
+import Button from "../../ui/Button";
 
 function CabinRow({ cabin, onUpdate, setCabin }) {
   const { mutate: deleteCabin, isPending } = useDeleteCabin();
+  const { mutate, isPending: isCreatePending } = useCreateEditCabin();
+
+  function handleCreateCopy() {
+    mutate({
+      ...cabin,
+      name: `${cabin.name} copy`,
+      id: undefined,
+    });
+  }
 
   return (
     <>
@@ -33,6 +43,17 @@ function CabinRow({ cabin, onUpdate, setCabin }) {
           )}
         </td>
         <td>
+          <button
+            className="p-2 rounded text-purple-600 hover:bg-purple-50"
+            onClick={handleCreateCopy}
+            disabled={isCreatePending}
+          >
+            {isCreatePending ? (
+              <SpinnerMini size="h-5 w-5" />
+            ) : (
+              <HiSquare2Stack className="w-5 h-5" />
+            )}
+          </button>
           <button
             className="p-2 rounded text-blue-600 hover:bg-blue-50"
             onClick={() => {
