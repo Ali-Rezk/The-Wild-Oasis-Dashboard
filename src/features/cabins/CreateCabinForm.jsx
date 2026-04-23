@@ -66,6 +66,7 @@ function CreateCabinForm({ onCloseModal, cabin }) {
     <Form
       onSubmit={handleSubmit(onSubmit, onError)}
       className="bg-grey-50 p-[2.4rem] rounded-[7px]"
+      type="modal"
     >
       <FormRow label="Cabin name" error={errors.name?.message}>
         <Input
