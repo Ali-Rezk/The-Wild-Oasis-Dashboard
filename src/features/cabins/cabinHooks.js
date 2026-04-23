@@ -14,10 +14,10 @@ export function useGetCabins() {
   return cabinsData;
 }
 
-export function useCreateEditCabin(isEditMode) {
+export function useCreateUpdateCabin(isEditMode) {
   const queryClient = useQueryClient();
 
-  const createEditCabinMutation = useMutation({
+  const createUpdateCabinMutation = useMutation({
     mutationFn: ({ id, ...data }) => createEditCabin(data, id),
     onSuccess: () => {
       toast.success(
@@ -35,7 +35,7 @@ export function useCreateEditCabin(isEditMode) {
     },
   });
 
-  return createEditCabinMutation;
+  return createUpdateCabinMutation;
 }
 
 export function useDeleteCabin() {

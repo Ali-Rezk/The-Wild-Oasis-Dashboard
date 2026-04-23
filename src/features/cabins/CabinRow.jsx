@@ -2,12 +2,12 @@ import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { formatCurrency } from "../../utils/helpers";
 import SpinnerMini from "../../ui/SpinnerMini";
 import CreateCabinForm from "./CreateCabinForm";
-import { useCreateEditCabin, useDeleteCabin } from "./cabinHooks";
+import { useCreateUpdateCabin, useDeleteCabin } from "./cabinHooks";
 import Button from "../../ui/Button";
 
 function CabinRow({ cabin, onUpdate, setCabin }) {
   const { mutate: deleteCabin, isPending } = useDeleteCabin();
-  const { mutate, isPending: isCreatePending } = useCreateEditCabin();
+  const { mutate, isPending: isCreatePending } = useCreateUpdateCabin();
 
   function handleCreateCopy() {
     mutate({

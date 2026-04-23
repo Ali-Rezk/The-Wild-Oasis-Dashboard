@@ -6,7 +6,7 @@ import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
 import SpinnerMini from "../../ui/SpinnerMini";
 import FormRow from "../../ui/FormRow";
-import { useCreateEditCabin } from "./cabinHooks";
+import { useCreateUpdateCabin } from "./cabinHooks";
 
 const defaultValues = {
   name: "",
@@ -30,7 +30,7 @@ function CreateCabinForm({ onCloseModal, cabin }) {
     defaultValues: isEditMode ? cabin : defaultValues,
   });
 
-  const { mutate, isPending } = useCreateEditCabin(isEditMode);
+  const { mutate, isPending } = useCreateUpdateCabin(isEditMode);
 
   function onSubmit(data) {
     const isImageString = typeof data.image === "string";
