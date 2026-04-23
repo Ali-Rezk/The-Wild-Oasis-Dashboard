@@ -1,9 +1,8 @@
 import Button from "./Button";
 import Heading from "./Heading";
+import SpinnerMini from "./SpinnerMini";
 
 function ConfirmDelete({ resource, onConfirm, disabled, closeModal }) {
-  function handleConfirmClick() {}
-
   return (
     <div className="flex flex-col gap-[1.2rem]" style={{ width: "40rem" }}>
       <Heading as="h3">Delete {resource}</Heading>
@@ -16,12 +15,8 @@ function ConfirmDelete({ resource, onConfirm, disabled, closeModal }) {
         <Button variation="secondary" onClick={closeModal}>
           Cancel
         </Button>
-        <Button
-          variation="danger"
-          onClick={handleConfirmClick}
-          disabled={disabled}
-        >
-          Delete
+        <Button variation="danger" onClick={onConfirm} disabled={disabled}>
+          {disabled ? <SpinnerMini size="h-5 w-5" /> : "Delete"}
         </Button>
       </div>
     </div>

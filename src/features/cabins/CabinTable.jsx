@@ -3,6 +3,7 @@ import CabinRow from "./CabinRow";
 import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm";
 import { useGetCabins } from "./cabinHooks";
+import Modal from "../../ui/Modal";
 
 export default function CabinTable() {
   const [showForm, setShowForm] = useState(false);
@@ -37,10 +38,12 @@ export default function CabinTable() {
         </tbody>
       </table>
       {showForm && (
-        <CreateCabinForm
-          cabin={cabin}
-          onCloseModal={() => setShowForm(false)}
-        />
+        <Modal onClose={() => setShowForm(false)} title={"Edit Cabin"}>
+          <CreateCabinForm
+            cabin={cabin}
+            onCloseModal={() => setShowForm(false)}
+          />
+        </Modal>
       )}
     </>
   );

@@ -4,10 +4,14 @@ import SpinnerMini from "../../ui/SpinnerMini";
 import CreateCabinForm from "./CreateCabinForm";
 import { useCreateUpdateCabin, useDeleteCabin } from "./cabinHooks";
 import Button from "../../ui/Button";
+import { useState } from "react";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 function CabinRow({ cabin, onUpdate, setCabin }) {
-  const { mutate: deleteCabin, isPending } = useDeleteCabin();
+  const { mutate: deleteCabin, isPending: isDeletePending } = useDeleteCabin();
   const { mutate, isPending: isCreatePending } = useCreateUpdateCabin();
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   function handleCreateCopy() {
     mutate({
@@ -15,6 +19,10 @@ function CabinRow({ cabin, onUpdate, setCabin }) {
       name: `${cabin.name} copy`,
       id: undefined,
     });
+  }
+
+  function handleDelete() {
+    deleteCabin(cabin.id);
   }
 
   return (
@@ -60,21 +68,31 @@ function CabinRow({ cabin, onUpdate, setCabin }) {
               setCabin(cabin);
               onUpdate(true);
             }}
-            disabled={isPending}
+            disabled={isCreatePending}
           >
             {<HiPencil className="w-5 h-5" />}
           </button>
           <button
             className="p-2 rounded text-red-600 hover:bg-red-50"
-            onClick={() => deleteCabin(cabin.id)}
-            disabled={isPending}
+            onClick={() => setDeleteModalOpen(true)}
+            disabled={isDeletePending}
           >
-            {isPending ? (
+            {isDeletePending ? (
               <SpinnerMini size="h-5 w-5" />
             ) : (
               <HiTrash className="w-5 h-5" />
             )}
           </button>
+          {deleteModalOpen && (
+            <Modal onClose={() => setDeleteModalOpen(false)}>
+              <ConfirmDelete
+                resource={cabin.name}
+                onConfirm={handleDelete}
+                disabled={isDeletePending}
+                closeModal={() => setDeleteModalOpen(false)}
+              />
+            </Modal>
+          )}
         </td>
       </tr>
     </>
