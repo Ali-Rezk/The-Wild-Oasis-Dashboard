@@ -2,9 +2,9 @@ import { createContext, useContext } from "react";
 
 const TableContext = createContext();
 
-function Table({ columns, children }) {
+function Table({ className, children, columns }) {
   return (
-    <TableContext.Provider value={{ columns }}>
+    <TableContext.Provider className={className} value={{ columns }}>
       <div className="border border-grey-200 text-[1.4rem] bg-grey-0 rounded-[7px] overflow-hidden">
         {children}
       </div>
@@ -12,33 +12,30 @@ function Table({ columns, children }) {
   );
 }
 
-function Header({ children }) {
+function Header({ children, className }) {
   const { columns } = useContext(TableContext);
   return (
     <header
-      className="grid items-center gap-x-[2.4rem] py-[1.6rem] px-[2.4rem] bg-grey-50 border-b border-grey-100 uppercase font-semibold text-grey-600"
-      style={{ gridTemplateColumns: columns, letterSpacing: "0.4px" }}
-      role="row"
+      className={`grid ${columns} text-center gap-x-10 items-center bg-grey-50 border-b border-grey-100 uppercase tracking-[0.4px] font-semibold text-grey-600 px-[2.4rem] py-[1.6rem] ${className}`}
+      style={{ letterSpacing: "0.4px" }}
     >
       {children}
     </header>
   );
 }
 
-function Row({ children }) {
+function Row({ children, className }) {
   const { columns } = useContext(TableContext);
   return (
     <div
-      className="grid items-center gap-x-[2.4rem] py-[1.2rem] px-[2.4rem] not-last:border-b not-last:border-grey-100"
-      style={{ gridTemplateColumns: columns }}
-      role="row"
+      className={`grid ${columns} items-center gap-x-[2.4rem] py-[1.2rem] px-[2.4rem] not-last:border-b not-last:border-grey-100 ${className}`}
     >
       {children}
     </div>
   );
 }
 
-function Body({ data, render }) {
+function Body({ data, render, className }) {
   if (!data || data.length === 0)
     return (
       <p
@@ -49,12 +46,14 @@ function Body({ data, render }) {
       </p>
     );
 
-  return <section style={{ margin: "0.4rem 0" }}>{data.map(render)}</section>;
+  return <section className={className}>{data.map(render)}</section>;
 }
 
-function Footer({ children }) {
+function Footer({ children, className }) {
   return (
-    <footer className="bg-grey-50 flex justify-center p-[1.2rem] empty:hidden">
+    <footer
+      className={`bg-grey-50 flex justify-center p-[1.2rem] empty:hidden ${className}`}
+    >
       {children}
     </footer>
   );
