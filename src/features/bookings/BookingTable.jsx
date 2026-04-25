@@ -11,14 +11,13 @@ function BookingTable() {
   if (!bookings.length) return <Empty resource="bookings" />;
 
   return (
-    <Table columns="grid-cols-6">
+    <Table columns="grid-cols-5">
       <Table.Header>
         <div>Cabin</div>
         <div>Guest</div>
         <div>Dates</div>
         <div>Status</div>
         <div>Amount</div>
-        <div></div>
       </Table.Header>
 
       <Table.Body

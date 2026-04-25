@@ -14,7 +14,7 @@ function BookingRow({ booking }) {
   };
 
   return (
-    <Table.Row>
+    <Table.Row className={"[&_div]:text-center [&_span]:mx-auto"}>
       <div className="text-[1.6rem] font-semibold text-grey-600 font-['Sono']">
         {booking.cabins.name}
       </div>
@@ -37,7 +37,7 @@ function BookingRow({ booking }) {
         </span>
       </div>
 
-      <Tag type={statusToTagName[booking.status]}>
+      <Tag type={statusToTagName[booking.status?.toLowerCase()]}>
         {booking.status.replace("-", " ")}
       </Tag>
 
