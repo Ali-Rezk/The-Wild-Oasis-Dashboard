@@ -1,12 +1,12 @@
-function Select({ options, value, onChange, type = "default" }) {
+function Select({ options, value, onChange, type = "default", ...props }) {
   const borderClass = type === "white" ? "border-grey-100" : "border-grey-300";
 
   return (
     <select
       value={value}
       onChange={onChange}
-      className={`text-[1.4rem] border ${borderClass} rounded-[5px] bg-grey-0 font-medium shadow-sm`}
-      style={{ padding: "0.8rem 1.2rem" }}
+      className={`text-[1.4rem] border ${borderClass} rounded-[5px] bg-grey-0 font-medium shadow-sm px-3.5 py-5`}
+      {...props}
     >
       {options.map((opt) => (
         <option key={opt.value} value={opt.value}>

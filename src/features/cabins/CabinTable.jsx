@@ -6,15 +6,19 @@ import { useGetCabins } from "./cabinHooks";
 import Modal from "../../ui/Modal";
 import Table from "../../ui/Table";
 import { useSearchParams } from "react-router-dom";
+import Empty from "../../ui/Empty";
 
 export default function CabinTable() {
   const [showForm, setShowForm] = useState(false);
   const [cabin, setCabin] = useState(null);
 
-  const { data: cabins, error, isLoading } = useGetCabins();
+  const { data: cabins, isLoading } = useGetCabins();
 
   const [searchParams] = useSearchParams();
   const filteredValue = searchParams.get("discount") || "all";
+
+  if (isLoading) return <Spinner />;
+  if (!cabins.length) return <Empty resourceName="cabins" />;
 
   let filteredCabins = cabins;
 
@@ -24,8 +28,22 @@ export default function CabinTable() {
     filteredCabins = cabins.filter((cabin) => cabin.discount);
   }
 
-  if (isLoading) return <Spinner />;
-  if (error) return <p>Error: {error.message}</p>;
+  let sortBy = searchParams.get("sortBy") || "CreatedAt-desc";
+
+  const [sortField, sortDirection] = sortBy.split("-");
+
+  const sortedCabins = [...filteredCabins].sort((a, b) => {
+    if (sortDirection === "asc") {
+      if (a[sortField] < b[sortField]) return -1;
+      if (a[sortField] > b[sortField]) return 1;
+      return 0;
+    } else {
+      if (a[sortField] > b[sortField]) return -1;
+      if (a[sortField] < b[sortField]) return 1;
+      return 0;
+    }
+  });
+
   return (
     <>
       <Table
@@ -40,7 +58,7 @@ export default function CabinTable() {
           <div>Actions</div>
         </Table.Header>
         <Table.Body
-          data={filteredCabins}
+          data={sortedCabins}
           render={(cabin) => (
             <CabinRow
               cabin={cabin}
