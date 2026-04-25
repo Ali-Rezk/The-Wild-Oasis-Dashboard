@@ -5,13 +5,24 @@ import CreateCabinForm from "./CreateCabinForm";
 import { useGetCabins } from "./cabinHooks";
 import Modal from "../../ui/Modal";
 import Table from "../../ui/Table";
+import { useSearchParams } from "react-router-dom";
 
 export default function CabinTable() {
   const [showForm, setShowForm] = useState(false);
   const [cabin, setCabin] = useState(null);
 
   const { data: cabins, error, isLoading } = useGetCabins();
-  console.log(cabins);
+
+  const [searchParams] = useSearchParams();
+  const filteredValue = searchParams.get("discount") || "all";
+
+  let filteredCabins = cabins;
+
+  if (filteredValue === "no-discount") {
+    filteredCabins = cabins.filter((cabin) => !cabin.discount);
+  } else if (filteredValue === "with-discount") {
+    filteredCabins = cabins.filter((cabin) => cabin.discount);
+  }
 
   if (isLoading) return <Spinner />;
   if (error) return <p>Error: {error.message}</p>;
@@ -29,7 +40,7 @@ export default function CabinTable() {
           <div>Actions</div>
         </Table.Header>
         <Table.Body
-          data={cabins}
+          data={filteredCabins}
           render={(cabin) => (
             <CabinRow
               cabin={cabin}
