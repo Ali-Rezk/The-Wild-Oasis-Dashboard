@@ -13,10 +13,10 @@ export async function getBookings({ filter, sortBy }) {
     query = query.eq(filter.field, filter.value);
   }
 
-  // if (sortBy) {
-  //   const [field, order] = sortBy.split("-");
-  //   query = query.order(field, { ascending: order === "asc" });
-  // }
+  if (sortBy) {
+    const { field, order } = sortBy;
+    query = query.order(field, { ascending: order === "asc" });
+  }
 
   const { data, error } = await query;
 
