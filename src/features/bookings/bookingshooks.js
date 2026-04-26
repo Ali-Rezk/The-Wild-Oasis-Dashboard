@@ -10,13 +10,15 @@ export function useGetBookings() {
   const filterValue = searchParams.get("status") || "all";
   const filter =
     filterValue === "all" ? null : { field: "status", value: filterValue };
-  const sortByRaw = searchParams.get("sortBy") || "createdAt_desc";
+  const sortByRaw = searchParams.get("sortBy") || "created_at-desc";
   const [sortField, sortOrder] = sortByRaw.split("-");
   const sortBy = { field: sortField, order: sortOrder };
 
+  const paginationPage = Number(searchParams.get("page")) || 1;
+
   const bookingsData = useQuery({
-    queryKey: ["bookings", filterValue, sortBy],
-    queryFn: () => getBookings({ filter, sortBy }),
+    queryKey: ["bookings", filterValue, sortBy, paginationPage],
+    queryFn: () => getBookings({ filter, sortBy, page: paginationPage }),
   });
   return bookingsData;
 }

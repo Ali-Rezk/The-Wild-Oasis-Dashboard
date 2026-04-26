@@ -1,50 +1,98 @@
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
 
-const PAGE_SIZE = 10;
+const MAX_VISIBLE = 5;
 
-function Pagination({ count }) {
+function getPageWindow(currentPage, pageCount) {
+  if (pageCount <= MAX_VISIBLE) {
+    return Array.from({ length: pageCount }, (_, i) => i + 1);
+  }
+  const half = Math.floor(MAX_VISIBLE / 2);
+  let start = currentPage - half;
+  let end = currentPage + half;
+  if (start < 1) {
+    start = 1;
+    end = MAX_VISIBLE;
+  }
+  if (end > pageCount) {
+    end = pageCount;
+    start = pageCount - MAX_VISIBLE + 1;
+  }
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+}
+
+function Pagination({ count, pageSize }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = !searchParams.get("page") ? 1 : Number(searchParams.get("page"));
-  const pageCount = Math.ceil(count / PAGE_SIZE);
+  const currentPage = !searchParams.get("page")
+    ? 1
+    : Number(searchParams.get("page"));
+  const pageCount = Math.ceil(count / pageSize);
 
-  function nextPage() {
-    const next = currentPage === pageCount ? currentPage : currentPage + 1;
-    searchParams.set("page", next);
+  function goToPage(page) {
+    searchParams.set("page", page);
     setSearchParams(searchParams);
   }
 
+  function nextPage() {
+    if (currentPage < pageCount) goToPage(currentPage + 1);
+  }
+
   function prevPage() {
-    const prev = currentPage === 1 ? currentPage : currentPage - 1;
-    searchParams.set("page", prev);
-    setSearchParams(searchParams);
+    if (currentPage > 1) goToPage(currentPage - 1);
   }
 
   if (pageCount <= 1) return null;
 
+  const pages = getPageWindow(currentPage, pageCount);
+
+  const btnBase =
+    "flex items-center justify-center border-none rounded-[5px] font-medium text-[1.4rem] transition-all duration-300";
+  const navBtn = `${btnBase} gap-[0.4rem] bg-grey-50 hover:not-disabled:bg-brand-600 hover:not-disabled:text-brand-50 disabled:opacity-50`;
+
   return (
     <div className="w-full flex items-center justify-between">
       <p className="text-[1.4rem]" style={{ marginLeft: "0.8rem" }}>
-        Showing <span className="font-semibold">{(currentPage - 1) * PAGE_SIZE + 1}</span> to{" "}
-        <span className="font-semibold">{currentPage === pageCount ? count : currentPage * PAGE_SIZE}</span> of{" "}
-        <span className="font-semibold">{count}</span> results
+        Showing{" "}
+        <span className="font-semibold">
+          {(currentPage - 1) * pageSize + 1}
+        </span>{" "}
+        to{" "}
+        <span className="font-semibold">
+          {currentPage === pageCount ? count : currentPage * pageSize}
+        </span>{" "}
+        of <span className="font-semibold">{count}</span> results
       </p>
 
       <div className="flex gap-[0.6rem]">
         <button
           onClick={prevPage}
           disabled={currentPage === 1}
-          className="flex items-center justify-center gap-[0.4rem] border-none rounded-[5px] font-medium text-[1.4rem] bg-grey-50 transition-all duration-300 hover:not-disabled:bg-brand-600 hover:not-disabled:text-brand-50 disabled:opacity-50"
+          className={navBtn}
           style={{ padding: "0.6rem 1.2rem" }}
         >
           <HiChevronLeft />
           <span>Previous</span>
         </button>
 
+        {pages.map((page) => (
+          <button
+            key={page}
+            onClick={() => goToPage(page)}
+            className={`${btnBase} ${
+              page === currentPage
+                ? "bg-brand-600 text-brand-50"
+                : "bg-grey-50 hover:bg-brand-600 hover:text-brand-50"
+            }`}
+            style={{ padding: "0.6rem 1.2rem", minWidth: "3.6rem" }}
+          >
+            {page}
+          </button>
+        ))}
+
         <button
           onClick={nextPage}
           disabled={currentPage === pageCount}
-          className="flex items-center justify-center gap-[0.4rem] border-none rounded-[5px] font-medium text-[1.4rem] bg-grey-50 transition-all duration-300 hover:not-disabled:bg-brand-600 hover:not-disabled:text-brand-50 disabled:opacity-50"
+          className={navBtn}
           style={{ padding: "0.6rem 1.2rem" }}
         >
           <span>Next</span>
