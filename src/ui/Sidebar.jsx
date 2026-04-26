@@ -1,3 +1,4 @@
+import Uploader from "../data/Uploader";
 import Logo from "./Logo";
 import MainNav from "./MainNav";
 
@@ -9,6 +10,7 @@ function Sidebar() {
     >
       <Logo />
       <MainNav />
+      <Uploader />
     </aside>
   );
 }

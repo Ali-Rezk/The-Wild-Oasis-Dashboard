@@ -9,6 +9,7 @@ function BookingTable() {
 
   if (isLoading) return <Spinner />;
   if (!bookings.length) return <Empty resource="bookings" />;
+  // console.log(bookings);
 
   return (
     <Table columns="grid-cols-5">

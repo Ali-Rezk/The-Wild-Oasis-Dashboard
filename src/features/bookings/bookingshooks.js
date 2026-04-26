@@ -2,11 +2,19 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import toast from "react-hot-toast";
 import { deleteBooking, getBookings } from "../../services/apiBookings";
+import { useSearchParams } from "react-router-dom";
 
 export function useGetBookings() {
+  const [searchParams] = useSearchParams();
+
+  const filterValue = searchParams.get("status") || "all";
+  const filter =
+    filterValue === "all" ? null : { field: "status", value: filterValue };
+  const sortBy = searchParams.get("sortBy") || "createdAt_desc";
+
   const bookingsData = useQuery({
-    queryKey: ["bookings"],
-    queryFn: getBookings,
+    queryKey: ["bookings", filterValue, sortBy],
+    queryFn: () => getBookings({ filter, sortBy }),
   });
   return bookingsData;
 }
