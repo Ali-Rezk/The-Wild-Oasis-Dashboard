@@ -3,9 +3,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { deleteBooking, getBookings } from "../../services/apiBookings";
 import { useSearchParams } from "react-router-dom";
+import { BOOKINGS_PER_PAGE } from "../../utils/constants";
 
 export function useGetBookings() {
   const [searchParams] = useSearchParams();
+  const queryClient = useQueryClient();
 
   const filterValue = searchParams.get("status") || "all";
   const filter =
@@ -20,6 +22,17 @@ export function useGetBookings() {
     queryKey: ["bookings", filterValue, sortBy, paginationPage],
     queryFn: () => getBookings({ filter, sortBy, page: paginationPage }),
   });
+
+  // prefetch next page
+
+  if (bookingsData.data?.count > paginationPage * BOOKINGS_PER_PAGE) {
+    const nextPage = paginationPage + 1;
+    queryClient.prefetchQuery({
+      queryKey: ["bookings", filterValue, sortBy, nextPage],
+      queryFn: () => getBookings({ filter, sortBy, page: nextPage }),
+    });
+  }
+
   return bookingsData;
 }
 

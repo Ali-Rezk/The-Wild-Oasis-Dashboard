@@ -18,8 +18,22 @@ function BookingTableOperations() {
 
       <Sort
         options={[
-          { value: "startDate-desc", label: "Sort by date (recent first)" },
-          { value: "startDate-asc", label: "Sort by date (earlier first)" },
+          {
+            value: "created_at-desc",
+            label: "Sort by Creation date (recent first)",
+          },
+          {
+            value: "created_at-asc",
+            label: "Sort by Creation date (earlier first)",
+          },
+          {
+            value: "startDate-desc",
+            label: "Sort by Start date (recent first)",
+          },
+          {
+            value: "startDate-asc",
+            label: "Sort by Start date (earlier first)",
+          },
           {
             value: "totalPrice-desc",
             label: "Sort by amount (high first)",
