@@ -12,8 +12,11 @@ import Spinner from "../../ui/Spinner";
 import ButtonText from "../../ui/ButtonText";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useCheckout } from "../check-in-out/useCheckin-out";
+import { useState } from "react";
 
 function BookingDetails() {
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
   const { booking, isLoading } = useBooking();
   const { mutate: deleteBooking, isLoading: isDeleting } = useDeleteBooking();
   const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
@@ -26,6 +29,18 @@ function BookingDetails() {
     "checked-in": "green",
     "checked-out": "silver",
   };
+
+  function handleDelete() {
+    deleteBooking(booking?.id, {
+      onSuccess: () => {
+        navigate(`/bookings`);
+      },
+    });
+  }
+  function handleCheckout() {
+    window.confirm("Are you sure you want to check out this booking?") &&
+      checkout(booking?.id);
+  }
 
   if (isLoading) {
     return <Spinner />;
@@ -57,22 +72,26 @@ function BookingDetails() {
         )}
 
         {status === "checked-in" && (
-          <Button onClick={() => checkout(bookingId)} disabled={isCheckingOut}>
+          <Button onClick={handleCheckout} disabled={isCheckingOut}>
             Check out
           </Button>
         )}
 
-        {/* <ConfirmDelete
-          resource="booking"
-          onConfirm={(options) => deleteBooking(bookingId, options)}
-          disabled={isDeleting}
-          closeModal={() => setDeleteModalOpen(false)}
-        /> */}
-
+        <Button variation="danger" onClick={() => setDeleteModalOpen(true)}>
+          Delete
+        </Button>
         <Button variation="secondary" onClick={moveBack}>
           Back
         </Button>
       </ButtonGroup>
+      {deleteModalOpen && (
+        <ConfirmDelete
+          resource="booking"
+          onConfirm={handleDelete}
+          disabled={isDeleting}
+          closeModal={() => setDeleteModalOpen(false)}
+        />
+      )}
     </>
   );
 }

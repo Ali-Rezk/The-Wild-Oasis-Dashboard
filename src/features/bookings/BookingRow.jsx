@@ -7,8 +7,15 @@ import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
 import { HiEye } from "react-icons/hi";
 import { Navigate, useNavigate } from "react-router-dom";
-import { HiArrowDownOnSquare, HiArrowUpOnSquare } from "react-icons/hi2";
+import {
+  HiArrowDownOnSquare,
+  HiArrowUpOnSquare,
+  HiTrash,
+} from "react-icons/hi2";
 import { useCheckout } from "../check-in-out/useCheckin-out";
+import { useDeleteBooking } from "./bookingshooks";
+import ConfirmDelete from "../../ui/ConfirmDelete";
+import { useState } from "react";
 
 function BookingRow({ booking }) {
   const statusToTagName = {
@@ -17,8 +24,11 @@ function BookingRow({ booking }) {
     "checked-out": "silver",
   };
 
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
   const navigate = useNavigate();
   const { mutate: checkout, isPending } = useCheckout();
+  const { mutate: deleteBooking, isLoading: isDeleting } = useDeleteBooking();
 
   function handleCheckout() {
     window.confirm("Are you sure you want to check out this booking?") &&
@@ -70,7 +80,18 @@ function BookingRow({ booking }) {
             <HiArrowUpOnSquare className="text-[1.8rem] text-red-500 cursor-pointer" />
           </button>
         )}
+        <button onClick={() => setDeleteModalOpen(true)} disabled={isPending}>
+          <HiTrash className="text-[1.8rem] text-red-500 cursor-pointer" />
+        </button>
       </div>
+      {deleteModalOpen && (
+        <ConfirmDelete
+          resource="booking"
+          onConfirm={(options) => deleteBooking(booking.id, options)}
+          disabled={isDeleting}
+          closeModal={() => setDeleteModalOpen(false)}
+        />
+      )}
     </Table.Row>
   );
 }
