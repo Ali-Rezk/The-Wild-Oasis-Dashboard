@@ -4,17 +4,19 @@ import Logo from "../ui/Logo";
 
 function Login() {
   return (
-    <main
-      className="min-h-screen grid items-start justify-center bg-grey-50"
-      style={{
-        gridTemplateColumns: "48rem",
-        alignContent: "center",
-        gap: "3.2rem",
-      }}
-    >
-      <Logo />
-      <Heading as="h4">Log in to your account</Heading>
-      <LoginForm />
+    <main className="min-h-screen flex flex-col items-center justify-center bg-grey-50 px-4 py-12">
+      <div
+        className="flex flex-col items-center gap-10 w-full"
+        style={{ maxWidth: "44rem" }}
+      >
+        <Logo />
+        <div className="flex flex-col gap-6 w-full">
+          <div className="text-center">
+            <Heading as="h4">Log in to your account</Heading>
+          </div>
+          <LoginForm />
+        </div>
+      </div>
     </main>
   );
 }

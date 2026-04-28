@@ -77,7 +77,7 @@ function BookingRow({ booking }) {
         )}
         {booking.status === "checked-in" && (
           <button onClick={handleCheckout} disabled={isPending}>
-            <HiArrowUpOnSquare className="text-[1.8rem] text-red-500 cursor-pointer" />
+            <HiArrowUpOnSquare className="text-[1.8rem] text-purple-500 cursor-pointer" />
           </button>
         )}
         <button onClick={() => setDeleteModalOpen(true)} disabled={isPending}>
