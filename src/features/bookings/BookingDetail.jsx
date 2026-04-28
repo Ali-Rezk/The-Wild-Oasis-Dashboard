@@ -11,11 +11,12 @@ import Modal from "../../ui/Modal";
 import Spinner from "../../ui/Spinner";
 import ButtonText from "../../ui/ButtonText";
 import ConfirmDelete from "../../ui/ConfirmDelete";
+import { useCheckout } from "../check-in-out/useCheckin-out";
 
 function BookingDetails() {
   const { booking, isLoading } = useBooking();
   const { mutate: deleteBooking, isLoading: isDeleting } = useDeleteBooking();
-  // const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
+  const { mutate: checkout, isLoading: isCheckingOut } = useCheckout();
 
   const moveBack = useMoveBack();
   const navigate = useNavigate();
