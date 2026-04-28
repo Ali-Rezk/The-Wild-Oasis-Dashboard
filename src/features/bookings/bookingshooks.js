@@ -1,8 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import toast from "react-hot-toast";
-import { deleteBooking, getBookings } from "../../services/apiBookings";
-import { useSearchParams } from "react-router-dom";
+import {
+  deleteBooking,
+  getBooking,
+  getBookings,
+} from "../../services/apiBookings";
+import { useParams, useSearchParams } from "react-router-dom";
 import { BOOKINGS_PER_PAGE } from "../../utils/constants";
 
 export function useGetBookings() {
@@ -34,6 +38,22 @@ export function useGetBookings() {
   }
 
   return bookingsData;
+}
+
+export function useBooking() {
+  const { bookingId } = useParams();
+
+  const {
+    isLoading,
+    data: booking,
+    error,
+  } = useQuery({
+    queryKey: ["booking", bookingId],
+    queryFn: () => getBooking(bookingId),
+    retry: false,
+  });
+
+  return { isLoading, error, booking };
 }
 
 // export function useCreateUpdateBooking(isEditMode) {

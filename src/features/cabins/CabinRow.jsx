@@ -24,6 +24,7 @@ function CabinRow({ cabin, onUpdate, setCabin }) {
 
   function handleDelete() {
     deleteCabin(cabin.id);
+    setDeleteModalOpen(false);
   }
 
   return (
@@ -84,14 +85,12 @@ function CabinRow({ cabin, onUpdate, setCabin }) {
           )}
         </button>
         {deleteModalOpen && (
-          <Modal onClose={() => setDeleteModalOpen(false)}>
-            <ConfirmDelete
-              resource={cabin.name}
-              onConfirm={handleDelete}
-              disabled={isDeletePending}
-              closeModal={() => setDeleteModalOpen(false)}
-            />
-          </Modal>
+          <ConfirmDelete
+            resource={cabin.name}
+            onConfirm={handleDelete}
+            disabled={isDeletePending}
+            closeModal={() => setDeleteModalOpen(false)}
+          />
         )}
       </div>
     </Table.Row>

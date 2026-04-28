@@ -5,6 +5,9 @@ import Table from "../../ui/Table";
 
 import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
+import { HiEye } from "react-icons/hi";
+import { Navigate, useNavigate } from "react-router-dom";
+import { HiArrowDownOnSquare } from "react-icons/hi2";
 
 function BookingRow({ booking }) {
   const statusToTagName = {
@@ -12,6 +15,8 @@ function BookingRow({ booking }) {
     "checked-in": "green",
     "checked-out": "silver",
   };
+
+  const navigate = useNavigate();
 
   return (
     <Table.Row className={"[&_div]:text-center [&_span]:mx-auto"}>
@@ -43,6 +48,21 @@ function BookingRow({ booking }) {
 
       <div className="font-['Sono'] font-medium">
         {formatCurrency(booking.totalPrice)}
+      </div>
+      <div className="flex gap-5 justify-center items-center">
+        <button onClick={() => navigate(`/bookings/${booking.id}`)}>
+          <HiEye className="text-[1.8rem] text-blue-500 cursor-pointer" />
+        </button>
+        {booking.status === "unconfirmed" && (
+          <button onClick={() => navigate(`/checkin/${booking.id}`)}>
+            <HiArrowDownOnSquare className="text-[1.8rem] text-green-500 cursor-pointer" />
+          </button>
+        )}
+        {/* {booking.status === "unconfirmed" && (
+          <button onClick={() => navigate(`/checkin/${booking.id}`)}>
+            <HiArrowDownOnSquare className="text-[1.8rem] text-green-500 cursor-pointer" />
+          </button>
+        )} */}
       </div>
     </Table.Row>
   );
