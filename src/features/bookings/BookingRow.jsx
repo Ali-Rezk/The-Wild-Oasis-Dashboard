@@ -7,7 +7,8 @@ import { formatCurrency } from "../../utils/helpers";
 import { formatDistanceFromNow } from "../../utils/helpers";
 import { HiEye } from "react-icons/hi";
 import { Navigate, useNavigate } from "react-router-dom";
-import { HiArrowDownOnSquare } from "react-icons/hi2";
+import { HiArrowDownOnSquare, HiArrowUpOnSquare } from "react-icons/hi2";
+import { useCheckout } from "../check-in-out/useCheckin-out";
 
 function BookingRow({ booking }) {
   const statusToTagName = {
@@ -17,6 +18,12 @@ function BookingRow({ booking }) {
   };
 
   const navigate = useNavigate();
+  const { mutate: checkout, isPending } = useCheckout();
+
+  function handleCheckout() {
+    window.confirm("Are you sure you want to check out this booking?") &&
+      checkout(booking.id);
+  }
 
   return (
     <Table.Row className={"[&_div]:text-center [&_span]:mx-auto"}>
@@ -58,11 +65,11 @@ function BookingRow({ booking }) {
             <HiArrowDownOnSquare className="text-[1.8rem] text-green-500 cursor-pointer" />
           </button>
         )}
-        {/* {booking.status === "unconfirmed" && (
-          <button onClick={() => navigate(`/checkin/${booking.id}`)}>
-            <HiArrowDownOnSquare className="text-[1.8rem] text-green-500 cursor-pointer" />
+        {booking.status === "checked-in" && (
+          <button onClick={handleCheckout} disabled={isPending}>
+            <HiArrowUpOnSquare className="text-[1.8rem] text-red-500 cursor-pointer" />
           </button>
-        )} */}
+        )}
       </div>
     </Table.Row>
   );

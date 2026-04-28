@@ -26,3 +26,22 @@ export function useCheckin() {
 
   return checkinData;
 }
+export function useCheckout() {
+  const queryClient = useQueryClient();
+  const checkoutData = useMutation({
+    mutationFn: (bookingId) =>
+      updateBooking(bookingId, {
+        status: "checked-out",
+      }),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(["bookings", data.id]);
+      toast.success(`Booking #${data.id} checked out successfully`);
+    },
+    onError: (error, bookingId) => {
+      console.error(error);
+      toast.error(`Unable to check out booking #${bookingId}`);
+    },
+  });
+
+  return checkoutData;
+}

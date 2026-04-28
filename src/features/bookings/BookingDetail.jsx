@@ -55,11 +55,11 @@ function BookingDetails() {
           </Button>
         )}
 
-        {/* {status === "checked-in" && (
+        {status === "checked-in" && (
           <Button onClick={() => checkout(bookingId)} disabled={isCheckingOut}>
             Check out
           </Button>
-        )} */}
+        )}
 
         {/* <ConfirmDelete
           resource="booking"

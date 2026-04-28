@@ -10,7 +10,7 @@ import Checkbox from "../../ui/Checkbox";
 import { formatCurrency } from "../../utils/helpers";
 import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
-import { useCheckin } from "./UseCheckin";
+import { useCheckin } from "./useCheckin-out";
 import Spinner from "../../ui/Spinner";
 
 function CheckinBooking() {
