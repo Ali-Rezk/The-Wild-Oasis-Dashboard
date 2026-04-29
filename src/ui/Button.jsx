@@ -23,13 +23,14 @@ function Button({
   onClick,
   disabled,
   type,
+  className,
 }) {
   return (
     <button
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`border-none rounded-[5px] shadow-sm transition-colors ${sizeClasses[size]} ${variationClasses[variation]}`}
+      className={`border-none rounded-[5px] shadow-sm transition-colors ${sizeClasses[size]} ${variationClasses[variation]} ${className}`}
       style={{ padding: sizePadding[size] }}
     >
       {children}
