@@ -1,7 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser, login, logout, signup } from "../../services/apiAuth";
+import {
+  getCurrentUser,
+  login,
+  logout,
+  signup,
+  updateUserData,
+} from "../../services/apiAuth";
 
 export function useSignup() {
   const queryClient = useQueryClient();
@@ -69,4 +75,22 @@ export function useCurrentUser() {
     queryFn: getCurrentUser,
   });
   return { user, isLoading, isAuthenticated: user?.role === "authenticated" };
+}
+
+export function useUpdateUser() {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: ({ full_name, password, avatar }) =>
+      updateUserData({ full_name, password, avatar }),
+    onSuccess: () => {
+      toast.success("User data updated successfully!");
+      queryClient.invalidateQueries(["user"]);
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error(`Update failed: ${error.message}`);
+    },
+  });
+  return mutation;
 }

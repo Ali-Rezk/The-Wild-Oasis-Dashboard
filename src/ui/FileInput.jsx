@@ -1,4 +1,4 @@
-function FileInput({ props }) {
+function FileInput({ ...props }) {
   return (
     <input
       type="file"
