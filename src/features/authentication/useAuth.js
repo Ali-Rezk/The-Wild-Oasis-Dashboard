@@ -1,7 +1,27 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { getCurrentUser, login, logout } from "../../services/apiAuth";
+import { getCurrentUser, login, logout, signup } from "../../services/apiAuth";
+
+export function useSignup() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationKey: "signup",
+    mutationFn: ({ fullName, email, password }) =>
+      signup({ fullName, email, password }),
+    onSuccess: (data) => {
+      toast.success(
+        "Signed up successfully! Please check your email to confirm your account.",
+      );
+      queryClient.setQueryData(["user"], data.user);
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error(`Signup failed: ${error.message}`);
+    },
+  });
+  return mutation;
+}
 
 export function useLogin() {
   const queryClient = useQueryClient();
