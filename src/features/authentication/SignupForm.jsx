@@ -34,7 +34,13 @@ function SignupForm() {
         <Input
           type="text"
           id="fullName"
-          {...register("fullName", { required: "Full name is required" })}
+          {...register("fullName", {
+            required: "Full name is required",
+            pattern: {
+              value: /^[a-zA-Z\s]+$/,
+              message: "Full name may only contain letters",
+            },
+          })}
         />
       </FormRow>
 

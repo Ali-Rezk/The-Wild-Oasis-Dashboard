@@ -18,16 +18,32 @@ function UpdateUserDataForm() {
 
   const [fullName, setFullName] = useState(currentFullName);
   const [avatar, setAvatar] = useState(null);
+  const [errors, setErrors] = useState({});
 
   const { mutate: updateUser, isLoading: isUpdating } = useUpdateUser();
 
+  function validate() {
+    const newErrors = {};
+    if (!fullName || !fullName.trim())
+      newErrors.fullName = "Full name is required";
+    else if (!/^[a-zA-Z\s]+$/.test(fullName.trim()))
+      newErrors.fullName = "Full name may only contain letters";
+    if (avatar && !avatar.type.startsWith("image/"))
+      newErrors.avatar = "File must be an image";
+    return newErrors;
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
-    if (!fullName) return;
-    console.log({ full_name: fullName, avatar });
+    const newErrors = validate();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({});
 
     updateUser(
-      { full_name: fullName, avatar },
+      { full_name: fullName.trim(), avatar },
       {
         onSuccess: () => {
           setAvatar(null);
@@ -42,6 +58,7 @@ function UpdateUserDataForm() {
     // We don't even need preventDefault because this button was designed to reset the form (remember, it has the HTML attribute 'reset')
     setFullName(currentFullName);
     setAvatar(null);
+    setErrors({});
   }
 
   return (
@@ -49,7 +66,7 @@ function UpdateUserDataForm() {
       <FormRow label="Email address">
         <Input value={email} disabled />
       </FormRow>
-      <FormRow label="Full name">
+      <FormRow label="Full name" error={errors.fullName}>
         <Input
           type="text"
           value={fullName}
@@ -58,7 +75,7 @@ function UpdateUserDataForm() {
           id="full_name"
         />
       </FormRow>
-      <FormRow label="Avatar image">
+      <FormRow label="Avatar image" error={errors.avatar}>
         <FileInput
           disabled={isUpdating}
           id="avatar"
