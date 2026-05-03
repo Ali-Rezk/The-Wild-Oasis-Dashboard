@@ -1,4 +1,3 @@
-import { useDarkMode } from "context/DarkModeContext";
 import {
   Cell,
   Legend,
@@ -7,34 +6,35 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-import Heading from "ui/Heading";
+import Heading from "../../ui/Heading";
 import DashboardBox from "./DashboardBox";
+import { useDarkMode } from "../../context/darkModeContext";
 
 const startDataLight = [
-  { duration: "1 night", value: 0, color: "#ef4444" },
-  { duration: "2 nights", value: 0, color: "#f97316" },
-  { duration: "3 nights", value: 0, color: "#eab308" },
-  { duration: "4-5 nights", value: 0, color: "#84cc16" },
-  { duration: "6-7 nights", value: 0, color: "#22c55e" },
-  { duration: "8-14 nights", value: 0, color: "#14b8a6" },
-  { duration: "15-21 nights", value: 0, color: "#3b82f6" },
-  { duration: "21+ nights", value: 0, color: "#a855f7" },
+  { duration: "1 night", value: 0, color: "#fb923c" },
+  { duration: "2 nights", value: 0, color: "#f43f5e" },
+  { duration: "3 nights", value: 0, color: "#facc15" },
+  { duration: "4-5 nights", value: 0, color: "#a3e635" },
+  { duration: "6-7 nights", value: 0, color: "#34d399" },
+  { duration: "8-14 nights", value: 0, color: "#22d3ee" },
+  { duration: "15-21 nights", value: 0, color: "#818cf8" },
+  { duration: "21+ nights", value: 0, color: "#e879f9" },
 ];
 
 const startDataDark = [
-  { duration: "1 night", value: 0, color: "#b91c1c" },
-  { duration: "2 nights", value: 0, color: "#c2410c" },
-  { duration: "3 nights", value: 0, color: "#a16207" },
-  { duration: "4-5 nights", value: 0, color: "#4d7c0f" },
-  { duration: "6-7 nights", value: 0, color: "#15803d" },
-  { duration: "8-14 nights", value: 0, color: "#0f766e" },
-  { duration: "15-21 nights", value: 0, color: "#1d4ed8" },
-  { duration: "21+ nights", value: 0, color: "#7e22ce" },
+  { duration: "1 night", value: 0, color: "#fdba74" },
+  { duration: "2 nights", value: 0, color: "#fb7185" },
+  { duration: "3 nights", value: 0, color: "#fde047" },
+  { duration: "4-5 nights", value: 0, color: "#bef264" },
+  { duration: "6-7 nights", value: 0, color: "#6ee7b7" },
+  { duration: "8-14 nights", value: 0, color: "#67e8f9" },
+  { duration: "15-21 nights", value: 0, color: "#a5b4fc" },
+  { duration: "21+ nights", value: 0, color: "#f0abfc" },
 ];
 
 function incArrayValue(arr, field) {
   return arr.map((obj) =>
-    obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
+    obj.duration === field ? { ...obj, value: obj.value + 1 } : obj,
   );
 }
 
@@ -63,41 +63,49 @@ function DurationChart({ confirmedStays }) {
   const data = prepareData(startData, confirmedStays);
 
   return (
-    <DashboardBox className="[grid-column:3/span_2]">
+    <DashboardBox className="col-[3/span_2]">
       <Heading as="h2">Stay duration summary</Heading>
-      <ResponsiveContainer width="100%" height={240}>
-        <PieChart>
-          <Pie
-            data={data}
-            nameKey="duration"
-            dataKey="value"
-            cx="40%"
-            cy="50%"
-            innerRadius={85}
-            outerRadius={110}
-            paddingAngle={3}
-            startAngle={180}
-            endAngle={-180}
-          >
-            {data.map((entry) => (
-              <Cell
-                key={entry.duration}
-                fill={entry.color}
-                stroke={entry.color}
-              />
-            ))}
-          </Pie>
-          <Tooltip />
-          <Legend
-            verticalAlign="middle"
-            align="right"
-            width="30%"
-            layout="vertical"
-            iconSize={15}
-            iconType="circle"
-          />
-        </PieChart>
-      </ResponsiveContainer>
+      {data.length > 0 ? (
+        <ResponsiveContainer width="100%" height={240}>
+          <PieChart>
+            <Pie
+              data={data}
+              nameKey="duration"
+              dataKey="value"
+              cx="40%"
+              cy="50%"
+              innerRadius={85}
+              outerRadius={110}
+              paddingAngle={3}
+              startAngle={180}
+              endAngle={-180}
+            >
+              {data.map((entry) => (
+                <Cell
+                  key={entry.duration}
+                  fill={entry.color}
+                  stroke={entry.color}
+                />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend
+              verticalAlign="middle"
+              align="right"
+              width="30%"
+              layout="vertical"
+              iconSize={15}
+              iconType="circle"
+            />
+          </PieChart>
+        </ResponsiveContainer>
+      ) : (
+        <div className="flex h-full justify-center items-center">
+          <p className="text-center text-xxl text-gray-200">
+            No confirmed stays in the last 7 days.
+          </p>
+        </div>
+      )}
     </DashboardBox>
   );
 }
