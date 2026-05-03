@@ -1,36 +1,33 @@
-import DurationChart from "features/dashboard/DurationChart";
-import SalesChart from "features/dashboard/SalesChart";
-import Stats from "features/dashboard/Stats";
-import TodayActivity from "features/check-in-out/TodayActivity";
-import { useRecentBookings } from "features/dashboard/useRecentBookings";
-import Spinner from "ui/Spinner";
-import { useRecentStays } from "./useRecentStays";
-import { useCabins } from "features/cabins/useCabins";
+import Spinner from "../../ui/Spinner";
+import { useGetCabins } from "../cabins/cabinHooks";
+import Stats from "./Stats";
+import { useRecentBookings, useRecentStays } from "./useDashboardBookings";
 
 function DashboardLayout() {
-  const { isLoading: isLoading1, bookings, numDays } = useRecentBookings();
-  const { isLoading: isLoading2, confirmedStays } = useRecentStays();
-  const { isLoading: isLoading3, cabins } = useCabins();
+  const { bookings, isLoading: isLoadingBookings } = useRecentBookings();
+  const { stays, isLoading: isLoadingStays, numDays } = useRecentStays();
+  const { data: cabins, isLoading: isLoadingCabins } = useGetCabins();
 
-  if (isLoading1 || isLoading2 || isLoading3) return <Spinner />;
+  if (isLoadingBookings || isLoadingStays || isLoadingCabins) {
+    return <Spinner />;
+  }
 
   return (
     <div
-      className="grid gap-[2.4rem]"
+      className="grid grid-cols-4 gap-[2.4rem]"
       style={{
-        gridTemplateColumns: "1fr 1fr 1fr 1fr",
         gridTemplateRows: "auto 34rem auto",
       }}
     >
       <Stats
         bookings={bookings}
-        confirmedStays={confirmedStays}
+        confirmedStays={stays}
         numDays={numDays}
         cabinCount={cabins.length}
       />
-      <TodayActivity />
-      <DurationChart confirmedStays={confirmedStays} />
-      <SalesChart bookings={bookings} numDays={numDays} />
+      <div>Today's activity</div>
+      <div>Chart stay duration</div>
+      <div>Chart sales</div>
     </div>
   );
 }

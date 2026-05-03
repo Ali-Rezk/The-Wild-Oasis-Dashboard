@@ -4,7 +4,6 @@ import image from "../../data/img/default-user.jpg";
 function UserAvatar() {
   const { user } = useCurrentUser();
   const { full_name, avatar } = user?.user_metadata || {};
-  console.log(user);
 
   return (
     <div className="flex gap-[1.2rem] items-center font-medium text-[1.4rem] text-grey-600">
