@@ -13,6 +13,7 @@ import Users from "./pages/Users";
 import AppLayout from "./ui/AppLayout";
 import CheckIn from "./pages/CheckIn";
 import ProtectedRoutes from "./ui/ProtectedRoutes";
+import { DarkModeProvider } from "./context/darkModeContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,42 +38,44 @@ window.__TANSTACK_QUERY_CLIENT__ = queryClient;
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route
-            element={
-              <ProtectedRoutes>
-                <AppLayout />
-              </ProtectedRoutes>
-            }
-          >
-            <Route index element={<Navigate replace to="dashboard" />} />
-            {protectedRoutes.map(({ path, element }) => (
-              <Route key={path} path={path} element={element} />
-            ))}
-          </Route>
+    <DarkModeProvider>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              element={
+                <ProtectedRoutes>
+                  <AppLayout />
+                </ProtectedRoutes>
+              }
+            >
+              <Route index element={<Navigate replace to="dashboard" />} />
+              {protectedRoutes.map(({ path, element }) => (
+                <Route key={path} path={path} element={element} />
+              ))}
+            </Route>
 
-          <Route path="login" element={<Login />} />
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
-      <Toaster
-        position="top-center"
-        gutter={12}
-        containerStyle={{ margin: "8px" }}
-        toastOptions={{
-          success: { duration: 3000 },
-          error: { duration: 5000 },
-          style: {
-            fontSize: "16px",
-            maxWidth: "500px",
-            padding: "16px 24px",
-            color: "var(--color-gray-700)",
-          },
-        }}
-      />
-    </QueryClientProvider>
+            <Route path="login" element={<Login />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </BrowserRouter>
+        <Toaster
+          position="top-center"
+          gutter={12}
+          containerStyle={{ margin: "8px" }}
+          toastOptions={{
+            success: { duration: 3000 },
+            error: { duration: 5000 },
+            style: {
+              fontSize: "16px",
+              maxWidth: "500px",
+              padding: "16px 24px",
+              color: "var(--color-gray-700)",
+            },
+          }}
+        />
+      </QueryClientProvider>
+    </DarkModeProvider>
   );
 }
 
