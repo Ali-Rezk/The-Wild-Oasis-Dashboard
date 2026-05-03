@@ -150,40 +150,49 @@
   }
   /* FOR DARK MODE */
   .dark {
-    --color-grey-0: #18212f;
-    --color-grey-50: #111827;
-    --color-grey-100: #1f2937;
-    --color-grey-200: #374151;
-    --color-grey-300: #4b5563;
-    --color-grey-400: #6b7280;
-    --color-grey-500: #9ca3af;
-    --color-grey-600: #d1d5db;
-    --color-grey-700: #e5e7eb;
-    --color-grey-800: #f3f4f6;
-    --color-grey-900: #f9fafb;
+    --color-grey-0: #0f1724;
+    --color-grey-50: #111b2e;
+    --color-grey-100: #1a2638;
+    --color-grey-200: #273449;
+    --color-grey-300: #39465d;
+    --color-grey-400: #58657a;
+    --color-grey-500: #8f9bb0;
+    --color-grey-600: #b8c2d1;
+    --color-grey-700: #d7deea;
+    --color-grey-800: #e8edf6;
+    --color-grey-900: #f5f8ff;
 
-    --color-blue-100: #075985;
-    --color-blue-700: #e0f2fe;
-    --color-green-100: #166534;
-    --color-green-700: #dcfce7;
-    --color-yellow-100: #854d0e;
-    --color-yellow-700: #fef9c3;
-    --color-silver-100: #374151;
-    --color-silver-700: #f3f4f6;
-    --color-indigo-100: #3730a3;
-    --color-indigo-700: #e0e7ff;
+    --color-brand-50: #1f2452;
+    --color-brand-100: #2a3269;
+    --color-brand-200: #3a4383;
+    --color-brand-500: #818cf8;
+    --color-brand-600: #a5b4fc;
+    --color-brand-700: #c7d2fe;
+    --color-brand-800: #e0e7ff;
+    --color-brand-900: #eef2ff;
 
-    --color-red-100: #fee2e2;
-    --color-red-700: #b91c1c;
-    --color-red-800: #991b1b;
+    --color-blue-100: #0c4a6e;
+    --color-blue-700: #bae6fd;
+    --color-green-100: #14532d;
+    --color-green-700: #bbf7d0;
+    --color-yellow-100: #713f12;
+    --color-yellow-700: #fde68a;
+    --color-silver-100: #334155;
+    --color-silver-700: #e2e8f0;
+    --color-indigo-100: #312e81;
+    --color-indigo-700: #c7d2fe;
 
-    --backdrop-color: rgba(0, 0, 0, 0.3);
+    --color-red-100: #7f1d1d;
+    --color-red-700: #fecaca;
+    --color-red-800: #fee2e2;
 
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.4);
+    --backdrop-color: rgba(6, 10, 20, 0.55);
 
-    --image-grayscale: 10%;
-    --image-opacity: 90%;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+    --shadow-md: 0 0.8rem 2.8rem rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 2.8rem 4rem rgba(0, 0, 0, 0.45);
+
+    --image-grayscale: 12%;
+    --image-opacity: 86%;
   }
 }
