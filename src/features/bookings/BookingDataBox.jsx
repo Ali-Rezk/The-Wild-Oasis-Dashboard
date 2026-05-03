@@ -22,7 +22,13 @@ function BookingDataBox({ booking }) {
     hasBreakfast,
     observations,
     isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
+    guests: {
+      fullName: guestName,
+      email,
+      nationality,
+      countryFlag,
+      nationalID,
+    },
     cabins: { name: cabinName },
   } = booking;
 
@@ -63,7 +69,9 @@ function BookingDataBox({ booking }) {
           className="flex items-center gap-[1.2rem] text-grey-500 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-grey-700"
           style={{ marginBottom: "1.6rem" }}
         >
-          {countryFlag && <Flag src={countryFlag} alt={`Flag of ${country}`} />}
+          {countryFlag && (
+            <Flag src={countryFlag} alt={`Flag of ${nationality}`} />
+          )}
           <p>
             {guestName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ""}
           </p>

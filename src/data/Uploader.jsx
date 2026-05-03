@@ -126,9 +126,9 @@ function Uploader() {
 
   return (
     <div
+      className="bg-brand-100"
       style={{
         marginTop: "auto",
-        backgroundColor: "#e0e7ff",
         padding: "8px",
         borderRadius: "5px",
         textAlign: "center",

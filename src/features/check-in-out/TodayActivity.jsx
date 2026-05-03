@@ -1,16 +1,20 @@
-import Heading from "ui/Heading";
-import Row from "ui/Row";
-import Spinner from "ui/Spinner";
+import Heading from "../../ui/Heading";
+import Row from "../../ui/Row";
+import Spinner from "../../ui/Spinner";
 import TodayItem from "../dashboard/TodayItem";
-import { useActivityTodayStays } from "./useActivityTodayStays";
+import { useActivityTodayStays } from "./useCheckin-out";
 
 function TodayActivity() {
   const { isLoading, stays } = useActivityTodayStays();
 
   return (
     <div
-      className="bg-grey-0 border border-grey-100 rounded-[7px] flex flex-col gap-[2.4rem]"
-      style={{ padding: "3.2rem", paddingTop: "2.4rem", gridColumn: "1 / span 2" }}
+      className="bg-grey-0 border border-grey-100 rounded-[7px] flex flex-col gap-[2.4rem] "
+      style={{
+        padding: "3.2rem",
+        paddingTop: "2.4rem",
+        gridColumn: "1 / span 2",
+      }}
     >
       <Row type="horizontal">
         <Heading as="h2">Today</Heading>
@@ -24,7 +28,7 @@ function TodayActivity() {
             ))}
           </ul>
         ) : (
-          <p className="text-center font-medium" style={{ fontSize: "1.8rem", marginTop: "0.8rem" }}>
+          <p className="text-center font-medium text-2xl mt-3.5">
             No activity today...
           </p>
         )

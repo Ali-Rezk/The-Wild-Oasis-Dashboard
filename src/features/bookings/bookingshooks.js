@@ -56,30 +56,6 @@ export function useBooking() {
   return { isLoading, error, booking };
 }
 
-// export function useCreateUpdateBooking(isEditMode) {
-//   const queryClient = useQueryClient();
-
-//   const createUpdateBookingMutation = useMutation({
-//     mutationFn: ({ id, ...data }) => createEditBooking(data, id),
-//     onSuccess: () => {
-//       toast.success(
-//         isEditMode
-//           ? "booking updated successfully"
-//           : "booking created successfully",
-//       );
-//       queryClient.invalidateQueries(["bookings"]);
-//     },
-//     onError: (error) => {
-//       console.error(error);
-//       toast.error(
-//         isEditMode ? "Unable to update booking" : "Unable to create booking",
-//       );
-//     },
-//   });
-
-//   return createUpdateBookingMutation;
-// }
-
 export function useDeleteBooking() {
   const queryClient = useQueryClient();
   const mutateDeleteBooking = useMutation({
