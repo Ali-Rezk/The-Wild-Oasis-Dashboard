@@ -1,4 +1,3 @@
-import { useDarkMode } from "context/DarkModeContext";
 import { eachDayOfInterval, format, isSameDay, subDays } from "date-fns";
 import {
   Area,
@@ -9,7 +8,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import Heading from "ui/Heading";
+import { useDarkMode } from "../../context/darkModeContext";
+import Heading from "../../ui/Heading";
 import DashboardBox from "./DashboardBox";
 
 function SalesChart({ bookings, numDays }) {
@@ -65,7 +65,7 @@ function SalesChart({ bookings, numDays }) {
             tick={{ fill: colors.text }}
             tickLine={{ stroke: colors.text }}
           />
-          <CartesianGrid strokeDasharray="4" />
+          <CartesianGrid strokeDasharray="4" stroke={colors.text} />
           <Tooltip contentStyle={{ backgroundColor: colors.background }} />
           <Area
             type="monotone"
