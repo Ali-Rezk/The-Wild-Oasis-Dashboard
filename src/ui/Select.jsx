@@ -5,7 +5,7 @@ function Select({ options, value, onChange, type = "default", ...props }) {
     <select
       value={value}
       onChange={onChange}
-      className={`text-[1.4rem] border ${borderClass} rounded-[5px] bg-grey-0 font-medium shadow-sm px-3.5 py-5`}
+      className={`text-[1.4rem] border ${borderClass} rounded-[5px] bg-grey-0 font-medium shadow-sm py-[0.44rem] px-[1.2rem]`}
       {...props}
     >
       {options.map((opt) => (

@@ -7,7 +7,7 @@ const colorMap = {
 function Tag({ type, children }) {
   return (
     <span
-      className={`w-fit uppercase font-semibold rounded-full text-xl py-2 px-5 ${colorMap[type]}`}
+      className={`w-fit uppercase font-semibold rounded-full text-[1.1rem] py-[0.4rem] px-[1.2rem] ${colorMap[type]}`}
     >
       {children}
     </span>

@@ -54,8 +54,8 @@ function BookingDetails() {
 
   return (
     <>
-      <Row type="horizontal">
-        <div className="flex gap-[2.4rem] items-center">
+      <Row type="horizontal" className="mb-3">
+        <div className="flex flex-wrap gap-[1.2rem] items-center">
           <Heading as="h1">Booking #{bookingId}</Heading>
           <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
         </div>

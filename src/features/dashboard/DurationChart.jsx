@@ -6,6 +6,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
+import { useEffect, useRef, useState } from "react";
 import Heading from "../../ui/Heading";
 import DashboardBox from "./DashboardBox";
 import { useDarkMode } from "../../context/darkModeContext";
@@ -62,50 +63,67 @@ function DurationChart({ confirmedStays }) {
   const startData = isDarkMode ? startDataDark : startDataLight;
   const data = prepareData(startData, confirmedStays);
 
+  const boxRef = useRef(null);
+  const [boxWidth, setBoxWidth] = useState(0);
+
+  useEffect(() => {
+    if (!boxRef.current) return;
+    const observer = new ResizeObserver(([entry]) =>
+      setBoxWidth(entry.contentRect.width),
+    );
+    observer.observe(boxRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const innerRadius = boxWidth < 300 ? 45 : boxWidth < 450 ? 60 : 85;
+  const outerRadius = boxWidth < 300 ? 65 : boxWidth < 450 ? 80 : 110;
+
   return (
-    <DashboardBox className="sm:col-span-2 lg:col-[3/span_2]">
+    <DashboardBox className="sm:col-span-2 lg:col-[3/span_2] lg:row-start-2">
       <Heading as="h2">Stay duration summary</Heading>
-      {data.length > 0 ? (
-        <ResponsiveContainer width="100%" height={240}>
-          <PieChart>
-            <Pie
-              data={data}
-              nameKey="duration"
-              dataKey="value"
-              cx="40%"
-              cy="50%"
-              innerRadius={85}
-              outerRadius={110}
-              paddingAngle={3}
-              startAngle={180}
-              endAngle={-180}
-            >
-              {data.map((entry) => (
-                <Cell
-                  key={entry.duration}
-                  fill={entry.color}
-                  stroke={entry.color}
-                />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend
-              verticalAlign="middle"
-              align="right"
-              width="30%"
-              layout="vertical"
-              iconSize={15}
-              iconType="circle"
-            />
-          </PieChart>
-        </ResponsiveContainer>
-      ) : (
-        <div className="flex h-full justify-center items-center">
-          <p className="text-center text-xxl text-gray-200">
-            No confirmed stays in the last 7 days.
-          </p>
-        </div>
-      )}
+      <div ref={boxRef}>
+        {data.length > 0 ? (
+          <ResponsiveContainer width="100%" height={240}>
+            <PieChart>
+              <Pie
+                data={data}
+                nameKey="duration"
+                dataKey="value"
+                cx="40%"
+                cy="50%"
+                innerRadius={innerRadius}
+                outerRadius={outerRadius}
+                paddingAngle={3}
+                startAngle={180}
+                endAngle={-180}
+              >
+                {data.map((entry) => (
+                  <Cell
+                    key={entry.duration}
+                    fill={entry.color}
+                    stroke={entry.color}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend
+                verticalAlign="middle"
+                align="right"
+                width="30%"
+                layout="vertical"
+                iconSize={15}
+                iconType="circle"
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        ) : (
+          <div className="flex h-full justify-center items-center">
+            <p className="text-center text-[1.6rem] text-gray-200">
+              No confirmed stays in the last 7 days.
+            </p>
+          </div>
+        )}
+      </div>
     </DashboardBox>
   );
 }
