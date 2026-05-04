@@ -12,7 +12,7 @@ function Table({ className, children, columns }) {
   );
 }
 
-function Header({ children, className }) {
+function Header({ children, className = "" }) {
   const { columns } = useContext(TableContext);
   return (
     <header

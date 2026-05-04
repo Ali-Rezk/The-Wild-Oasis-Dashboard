@@ -4,14 +4,17 @@ import {
   HiOutlineCog6Tooth,
   HiOutlineHome,
   HiOutlineHomeModern,
+  HiOutlineUserPlus,
   HiOutlineUsers,
 } from "react-icons/hi2";
+import { HiUsers } from "react-icons/hi";
 
 const navLinks = [
   { to: "/dashboard", icon: <HiOutlineHome />, label: "Home" },
   { to: "/bookings", icon: <HiOutlineCalendarDays />, label: "Bookings" },
   { to: "/cabins", icon: <HiOutlineHomeModern />, label: "Cabins" },
   { to: "/users", icon: <HiOutlineUsers />, label: "Users" },
+  { to: "/guests", icon: <HiUsers />, label: "Guests" },
   { to: "/settings", icon: <HiOutlineCog6Tooth />, label: "Settings" },
 ];
 

@@ -48,7 +48,7 @@ export default function CabinTable() {
     <>
       <Table
         columns="grid-cols-6"
-        className="border border-grey-200 text-[1.4rem] bg-grey-0 rounded-[7px] overflow-hidden w-full"
+        className="border border-grey-200 text-[1.4rem] bg-grey-0 rounded-[7px] w-full"
       >
         <Table.Header>
           <div className="col-span-2">Cabin</div>

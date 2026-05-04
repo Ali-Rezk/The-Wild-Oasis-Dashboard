@@ -14,6 +14,7 @@ import AppLayout from "./ui/AppLayout";
 import CheckIn from "./pages/CheckIn";
 import ProtectedRoutes from "./ui/ProtectedRoutes";
 import { DarkModeProvider } from "./context/darkModeContext";
+import Guests from "./pages/Guests";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,6 +33,7 @@ const protectedRoutes = [
   { path: "users", element: <Users /> },
   { path: "settings", element: <Settings /> },
   { path: "account", element: <Account /> },
+  { path: "guests", element: <Guests /> },
 ];
 
 window.__TANSTACK_QUERY_CLIENT__ = queryClient;
