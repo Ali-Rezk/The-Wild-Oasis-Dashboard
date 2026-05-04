@@ -10,8 +10,7 @@ function UserAvatar() {
       <img
         src={avatar || image}
         alt={`Avatar of ${full_name}`}
-        className="block aspect-square object-cover object-center rounded-full outline outline-grey-100"
-        style={{ width: "3.6rem" }}
+        className="block w-[3.6rem] aspect-square object-cover object-center rounded-full outline outline-grey-100"
       />
       <span>{full_name}</span>
     </div>

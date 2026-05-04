@@ -33,6 +33,7 @@ function CheckinBooking() {
     numGuests,
     hasBreakfast,
     numNights,
+    status,
   } = booking;
 
   const optionalBreakfastPrice =
@@ -63,10 +64,7 @@ function CheckinBooking() {
       <BookingDataBox booking={booking} />
 
       {!hasBreakfast && (
-        <div
-          className="bg-grey-0 border border-grey-100 rounded-[7px]"
-          style={{ padding: "2.4rem 4rem" }}
-        >
+        <div className="bg-grey-0 border border-grey-100 rounded-[7px] px-4 py-[2.4rem] sm:px-16">
           <Checkbox
             checked={addBreakfast}
             onChange={() => {
@@ -80,10 +78,7 @@ function CheckinBooking() {
         </div>
       )}
 
-      <div
-        className="bg-grey-0 border border-grey-100 rounded-[7px]"
-        style={{ padding: "2.4rem 4rem" }}
-      >
+      <div className="bg-grey-0 border border-grey-100 rounded-[7px] px-4 py-[2.4rem] sm:px-16">
         <Checkbox
           checked={confirmPaid}
           onChange={() => setConfirmPaid((confirm) => !confirm)}

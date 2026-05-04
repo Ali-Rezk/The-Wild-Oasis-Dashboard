@@ -9,7 +9,7 @@ function Logo() {
       <img
         src={darkMode ? logoDark : logoLight}
         alt="Logo"
-        style={{ height: "9.6rem", width: "auto" }}
+        className="h-[9.6rem] w-auto"
       />
     </div>
   );

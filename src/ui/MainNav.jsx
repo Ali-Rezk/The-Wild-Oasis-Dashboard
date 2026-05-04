@@ -24,13 +24,12 @@ function MainNav() {
             <NavLink
               to={to}
               className={({ isActive }) =>
-                `flex items-center gap-[1.2rem] text-grey-600 font-medium transition-all duration-300 rounded-[5px] ${
+                `flex items-center gap-[1.2rem] text-[1.6rem] text-grey-600 font-medium transition-all duration-300 rounded-[5px] py-[1.2rem] px-[2.4rem] ${
                   isActive
                     ? "text-grey-800 bg-grey-50 [&_svg]:text-brand-600"
                     : "hover:text-grey-800 hover:bg-grey-50 hover:[&_svg]:text-brand-600"
                 }`
               }
-              style={{ fontSize: "1.6rem", padding: "1.2rem 2.4rem" }}
             >
               <span className="w-[2.4rem] h-[2.4rem] text-grey-400 transition-all duration-300">
                 {icon}

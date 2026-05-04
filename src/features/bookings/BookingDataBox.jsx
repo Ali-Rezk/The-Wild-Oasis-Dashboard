@@ -36,16 +36,8 @@ function BookingDataBox({ booking }) {
 
   return (
     <section className="bg-grey-0 border border-grey-100 rounded-[7px] overflow-hidden">
-      <header
-        className="flex items-center justify-between text-[#e0e7ff] [&_svg]:w-[3.2rem] [&_svg]:h-[3.2rem]"
-        style={{
-          backgroundColor: "var(--color-brand-500)",
-          padding: "2rem 4rem",
-          fontSize: "1.8rem",
-          fontWeight: 500,
-        }}
-      >
-        <div className="flex items-center gap-[1.6rem] font-semibold text-[1.8rem]">
+      <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-brand-500 text-[#e0e7ff] px-4 py-4 sm:px-16 sm:py-8 text-[1.6rem] sm:text-[1.8rem] font-medium [&_svg]:w-[3.2rem] [&_svg]:h-[3.2rem]">
+        <div className="flex items-center gap-[1.6rem] font-semibold">
           <HiOutlineHomeModern />
           <p>
             {numNights} nights in Cabin{" "}
@@ -55,7 +47,7 @@ function BookingDataBox({ booking }) {
           </p>
         </div>
 
-        <p>
+        <p className="text-[1.4rem] sm:text-[1.8rem]">
           {format(new Date(startDate), "EEE, MMM dd yyyy")} (
           {isToday(new Date(startDate))
             ? "Today"
@@ -64,11 +56,8 @@ function BookingDataBox({ booking }) {
         </p>
       </header>
 
-      <section style={{ padding: "3.2rem 4rem 1.2rem" }}>
-        <div
-          className="flex items-center gap-[1.2rem] text-grey-500 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-grey-700"
-          style={{ marginBottom: "1.6rem" }}
-        >
+      <section className="px-4 pt-[3.2rem] pb-[1.2rem] sm:px-[4rem]">
+        <div className="flex flex-wrap items-center gap-[1.2rem] mb-[1.6rem] text-grey-500 [&_p:first-of-type]:font-medium [&_p:first-of-type]:text-grey-700">
           {countryFlag && (
             <Flag src={countryFlag} alt={`Flag of ${nationality}`} />
           )}
@@ -95,18 +84,11 @@ function BookingDataBox({ booking }) {
         </DataItem>
 
         <div
-          className="flex items-center justify-between [&_p:last-child]:uppercase [&_p:last-child]:text-[1.4rem] [&_p:last-child]:font-semibold [&_svg]:w-[2.4rem] [&_svg]:h-[2.4rem] [&_svg]:text-current"
-          style={{
-            padding: "1.6rem 3.2rem",
-            borderRadius: "var(--border-radius-sm)",
-            marginTop: "2.4rem",
-            backgroundColor: isPaid
-              ? "var(--color-green-100)"
-              : "var(--color-yellow-100)",
-            color: isPaid
-              ? "var(--color-green-700)"
-              : "var(--color-yellow-700)",
-          }}
+          className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 py-[1.6rem] sm:px-[3.2rem] rounded-[var(--border-radius-sm)] mt-[2.4rem] [&_p:last-child]:uppercase [&_p:last-child]:text-[1.4rem] [&_p:last-child]:font-semibold [&_svg]:w-[2.4rem] [&_svg]:h-[2.4rem] [&_svg]:text-current ${
+            isPaid
+              ? "bg-green-100 text-green-700"
+              : "bg-yellow-100 text-yellow-700"
+          }`}
         >
           <DataItem icon={<HiOutlineCurrencyDollar />} label="Total price">
             {formatCurrency(totalPrice)}
@@ -120,10 +102,7 @@ function BookingDataBox({ booking }) {
         </div>
       </section>
 
-      <footer
-        className="text-grey-500 text-right"
-        style={{ padding: "1.6rem 4rem", fontSize: "1.2rem" }}
-      >
+      <footer className="text-grey-500 text-right text-[1.2rem] px-4 py-[1.6rem] sm:px-[4rem]">
         <p>Booked {format(new Date(created_at), "EEE, MMM dd yyyy, p")}</p>
       </footer>
     </section>

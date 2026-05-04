@@ -8,14 +8,7 @@ function TodayActivity() {
   const { isLoading, stays } = useActivityTodayStays();
 
   return (
-    <div
-      className="bg-grey-0 border border-grey-100 rounded-[7px] flex flex-col gap-[2.4rem] "
-      style={{
-        padding: "3.2rem",
-        paddingTop: "2.4rem",
-        gridColumn: "1 / span 2",
-      }}
-    >
+    <div className="bg-grey-0 border border-grey-100 rounded-[7px] flex flex-col gap-[2.4rem] p-[3.2rem] pt-[2.4rem] sm:col-span-2">
       <Row type="horizontal">
         <Heading as="h2">Today</Heading>
       </Row>

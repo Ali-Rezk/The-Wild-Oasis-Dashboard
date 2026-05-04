@@ -7,8 +7,7 @@ function Checkbox({ checked, onChange, disabled = false, id, children }) {
         checked={checked}
         onChange={onChange}
         disabled={disabled}
-        className="accent-brand-600 outline-offset-2"
-        style={{ height: "2.4rem", width: "2.4rem" }}
+        className="h-[2.4rem] w-[2.4rem] accent-brand-600 outline-offset-2"
       />
       <label
         htmlFor={!disabled ? id : ""}

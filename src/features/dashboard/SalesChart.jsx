@@ -47,7 +47,7 @@ function SalesChart({ bookings, numDays }) {
       };
 
   return (
-    <DashboardBox className="col-span-4">
+    <DashboardBox className="sm:col-span-2 lg:col-span-4">
       <Heading as="h2">
         Sales from {format(allDates.at(0), "MMM dd yyyy")} &mdash;{" "}
         {format(allDates.at(-1), "MMM dd yyyy")}

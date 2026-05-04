@@ -63,7 +63,7 @@ function DurationChart({ confirmedStays }) {
   const data = prepareData(startData, confirmedStays);
 
   return (
-    <DashboardBox className="col-[3/span_2]">
+    <DashboardBox className="sm:col-span-2 lg:col-[3/span_2]">
       <Heading as="h2">Stay duration summary</Heading>
       {data.length > 0 ? (
         <ResponsiveContainer width="100%" height={240}>

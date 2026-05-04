@@ -25,15 +25,7 @@ function TodayItem({ stay }) {
   };
 
   return (
-    <li
-      className="grid items-center border-b border-grey-100 first:border-t first:border-grey-100"
-      style={{
-        gridTemplateColumns: "9rem 2rem 1fr 7rem 9rem",
-        gap: "1.2rem",
-        fontSize: "1.4rem",
-        padding: "0.8rem 0",
-      }}
-    >
+    <li className="grid items-center border-b border-grey-100 first:border-t first:border-grey-100 gap-[1.2rem] text-[1.4rem] py-[0.8rem] grid-cols-[9rem_2rem_1fr_7rem_9rem]">
       <Tag type={statusToAction[status].tag}>
         {statusToAction[status].action}
       </Tag>

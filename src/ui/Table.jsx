@@ -5,8 +5,8 @@ const TableContext = createContext();
 function Table({ className, children, columns }) {
   return (
     <TableContext.Provider className={className} value={{ columns }}>
-      <div className="border border-grey-200 text-[1.4rem] bg-grey-0 rounded-[7px] overflow-hidden">
-        {children}
+      <div className="border border-grey-200 text-[1.4rem] bg-grey-0 rounded-[7px] overflow-hidden overflow-x-auto">
+        <div className="min-w-max">{children}</div>
       </div>
     </TableContext.Provider>
   );
@@ -17,7 +17,6 @@ function Header({ children, className }) {
   return (
     <header
       className={`grid ${columns} text-center gap-x-10 items-center bg-grey-50 border-b border-grey-100 uppercase tracking-[0.4px] font-semibold text-grey-600 px-[2.4rem] py-[1.6rem] ${className}`}
-      style={{ letterSpacing: "0.4px" }}
     >
       {children}
     </header>
@@ -38,10 +37,7 @@ function Row({ children, className }) {
 function Body({ data, render, className }) {
   if (!data || data.length === 0)
     return (
-      <p
-        className="text-[1.6rem] font-medium text-center"
-        style={{ margin: "2.4rem" }}
-      >
+      <p className="text-[1.6rem] font-medium text-center m-[2.4rem]">
         No data to show at the moment
       </p>
     );

@@ -5,9 +5,10 @@ function Form({ children, onSubmit, type, className }) {
     <form
       onSubmit={onSubmit}
       className={`overflow-hidden text-[1.4rem] ${
-        isModal ? "w-7xl" : "bg-grey-0 border border-grey-100 rounded-[7px]"
+        isModal
+          ? "w-full max-w-7xl"
+          : "bg-grey-0 border border-grey-100 rounded-[7px] px-4 py-[2.4rem] sm:px-16 overflow-x-auto"
       } ${className}`}
-      style={!isModal ? { padding: "2.4rem 4rem" } : {}}
     >
       {children}
     </form>

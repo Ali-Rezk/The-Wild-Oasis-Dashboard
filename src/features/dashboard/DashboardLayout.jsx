@@ -16,12 +16,7 @@ function DashboardLayout() {
   }
 
   return (
-    <div
-      className="grid grid-cols-4 gap-[2.4rem]"
-      style={{
-        gridTemplateRows: "auto 34rem auto",
-      }}
-    >
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[2.4rem] lg:[grid-template-rows:auto_34rem_auto]">
       <Stats
         bookings={bookings}
         confirmedStays={stays}

@@ -47,11 +47,11 @@ function Pagination({ count, pageSize }) {
 
   const btnBase =
     "flex items-center justify-center border-none rounded-[5px] font-medium text-[1.4rem] transition-all duration-300";
-  const navBtn = `${btnBase} gap-[0.4rem] bg-grey-50 hover:not-disabled:bg-brand-600 hover:not-disabled:text-brand-50 disabled:opacity-50`;
+  const navBtn = `${btnBase} gap-[0.4rem] py-[0.6rem] px-[1.2rem] bg-grey-50 hover:not-disabled:bg-brand-600 hover:not-disabled:text-brand-50 disabled:opacity-50`;
 
   return (
-    <div className="w-full flex items-center justify-between">
-      <p className="text-[1.4rem]" style={{ marginLeft: "0.8rem" }}>
+    <div className="w-full flex flex-wrap items-center justify-between gap-2">
+      <p className="text-[1.4rem] ml-[0.8rem]">
         Showing{" "}
         <span className="font-semibold">
           {(currentPage - 1) * pageSize + 1}
@@ -68,7 +68,6 @@ function Pagination({ count, pageSize }) {
           onClick={prevPage}
           disabled={currentPage === 1}
           className={navBtn}
-          style={{ padding: "0.6rem 1.2rem" }}
         >
           <HiChevronLeft />
           <span>Previous</span>
@@ -82,8 +81,7 @@ function Pagination({ count, pageSize }) {
               page === currentPage
                 ? "bg-brand-600 text-brand-50"
                 : "bg-grey-50 hover:bg-brand-600 hover:text-brand-50"
-            }`}
-            style={{ padding: "0.6rem 1.2rem", minWidth: "3.6rem" }}
+            } py-[0.6rem] px-[1.2rem] min-w-[3.6rem]`}
           >
             {page}
           </button>
@@ -93,7 +91,6 @@ function Pagination({ count, pageSize }) {
           onClick={nextPage}
           disabled={currentPage === pageCount}
           className={navBtn}
-          style={{ padding: "0.6rem 1.2rem" }}
         >
           <span>Next</span>
           <HiChevronRight />

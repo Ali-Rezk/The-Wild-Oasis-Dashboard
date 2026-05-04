@@ -5,9 +5,9 @@ const sizeClasses = {
 };
 
 const sizePadding = {
-  small: "0.4rem 0.8rem",
-  medium: "1.2rem 1.6rem",
-  large: "1.2rem 2.4rem",
+  small: "py-[0.4rem] px-[0.8rem]",
+  medium: "py-[1.2rem] px-[1.6rem]",
+  large: "py-[1.2rem] px-[2.4rem]",
 };
 
 const variationClasses = {
@@ -30,8 +30,7 @@ function Button({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`border-none rounded-[5px] shadow-sm transition-colors ${sizeClasses[size]} ${variationClasses[variation]} ${className}`}
-      style={{ padding: sizePadding[size] }}
+      className={`border-none rounded-[5px] shadow-sm transition-colors ${sizeClasses[size]} ${sizePadding[size]} ${variationClasses[variation]} ${className}`}
     >
       {children}
     </button>
