@@ -71,7 +71,7 @@ export default function GuestRow({ guest, onEdit }) {
           onConfirm={() => {
             deleteGuest(guest.id);
           }}
-          onClose={() => setIsDeleteConfirmation(false)}
+          closeModal={() => setIsDeleteConfirmation(false)}
           disabled={isDeleting}
         />
       )}

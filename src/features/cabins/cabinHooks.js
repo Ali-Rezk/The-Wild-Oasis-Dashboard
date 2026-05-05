@@ -48,7 +48,16 @@ export function useDeleteCabin() {
     },
     onError: (error) => {
       console.error(error);
-      toast.error("Unable to delete cabin");
+      if (
+        error.message ===
+        'update or delete on table "cabins" violates foreign key constraint "booking_cabinId_fkey" on table "bookings"'
+      ) {
+        toast.error(
+          "Unable to delete cabin. Please make sure to delete all bookings associated with this cabin first.",
+        );
+      } else {
+        toast.error("Unable to delete cabin");
+      }
     },
   });
 

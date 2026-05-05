@@ -80,7 +80,16 @@ export function useDeleteGuest() {
     },
     onError: (error) => {
       console.error(error);
-      toast.error("Unable to delete guest");
+      if (
+        error.message ===
+        'update or delete on table "guests" violates foreign key constraint "booking_guestId_fkey" on table "bookings"'
+      ) {
+        toast.error(
+          "Unable to delete guest. Please make sure to delete all bookings associated with this guest first.",
+        );
+      } else {
+        toast.error("Unable to delete guest");
+      }
     },
   });
 

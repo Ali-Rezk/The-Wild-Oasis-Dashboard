@@ -72,7 +72,7 @@ export async function deleteGuest(id) {
 
   if (error) {
     console.error(error);
-    throw new Error("Unable to delete guest");
+    throw new Error(error.message);
   }
   return data;
 }
