@@ -54,14 +54,14 @@ export default function GuestRow({ guest, onEdit }) {
             title="Edit guest"
             onClick={onEdit}
           >
-            <HiOutlinePencilSquare className="w-[1.8rem] h-[1.8rem]" />
+            <HiOutlinePencilSquare className="w-[1.8rem] h-[1.8rem] text-brand-500" />
           </button>
           <button
             className="p-[0.4rem] rounded-sm text-grey-400 hover:text-red-600 hover:bg-red-50 transition-colors"
             title="Delete guest"
             onClick={() => setIsDeleteConfirmation(true)}
           >
-            <HiOutlineTrash className="w-[1.8rem] h-[1.8rem]" />
+            <HiOutlineTrash className="w-[1.8rem] h-[1.8rem] text-red-400" />
           </button>
         </div>
       </Table.Row>
