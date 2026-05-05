@@ -1,5 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createGuest, getGuests, updateGuest } from "../../services/apiGuests";
+import {
+  createGuest,
+  deleteGuest,
+  getGuests,
+  updateGuest,
+} from "../../services/apiGuests";
 import { useSearchParams } from "react-router-dom";
 import { BOOKINGS_PER_PAGE } from "../../utils/constants";
 import toast from "react-hot-toast";
@@ -59,6 +64,23 @@ export function useCreateGuest() {
     onError: (error) => {
       console.error(error);
       toast.error("Unable to create guest");
+    },
+  });
+
+  return mutation;
+}
+
+export function useDeleteGuest() {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (id) => deleteGuest(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["guests"] });
+      toast.success("Guest deleted successfully");
+    },
+    onError: (error) => {
+      console.error(error);
+      toast.error("Unable to delete guest");
     },
   });
 
