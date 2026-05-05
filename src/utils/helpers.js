@@ -27,3 +27,22 @@ export const formatCurrency = (value) =>
   new Intl.NumberFormat("en", { style: "currency", currency: "USD" }).format(
     value,
   );
+
+export function getIso2Code(countryName) {
+  if (!countryName) return null;
+  const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
+  for (let i = 65; i <= 90; i++) {
+    for (let j = 65; j <= 90; j++) {
+      const code = String.fromCharCode(i) + String.fromCharCode(j);
+      try {
+        if (regionNames.of(code)?.toLowerCase() === countryName.toLowerCase()) {
+          return code.toLowerCase();
+        }
+      } catch (error) {
+        // Some combinations might not be valid region codes, so we catch the error and continue
+        console.log(`Error for code ${code}:`, error);
+      }
+    }
+  }
+  return null;
+}

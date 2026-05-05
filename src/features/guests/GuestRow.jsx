@@ -2,7 +2,7 @@ import { HiOutlinePencilSquare, HiOutlineTrash } from "react-icons/hi2";
 import { Flag } from "../../ui/Flag";
 import Table from "../../ui/Table";
 
-export default function GuestRow({ guest }) {
+export default function GuestRow({ guest, onEdit }) {
   const initials = guest.fullName
     ?.split(" ")
     .map((n) => n[0])
@@ -41,6 +41,7 @@ export default function GuestRow({ guest }) {
         <button
           className="p-[0.4rem] rounded-sm text-grey-400 hover:text-brand-600 hover:bg-brand-50 transition-colors"
           title="Edit guest"
+          onClick={onEdit}
         >
           <HiOutlinePencilSquare className="w-[1.8rem] h-[1.8rem]" />
         </button>

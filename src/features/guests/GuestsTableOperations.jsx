@@ -13,13 +13,16 @@ export default function GuestsTableOperations() {
     const timer = setTimeout(() => {
       setSearchParams((prev) => {
         const next = new URLSearchParams(prev);
+        const currentSearch = prev.get("search") ?? "";
         if (inputValue) {
           next.set("search", inputValue);
         } else {
           next.delete("search");
         }
-        // reset to page 1 on new search
-        next.delete("page");
+        // reset to page 1 only when search actually changes
+        if (currentSearch !== inputValue) {
+          next.delete("page");
+        }
         return next;
       });
     }, 300);

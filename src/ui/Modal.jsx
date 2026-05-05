@@ -16,7 +16,7 @@ export default function Modal({ children, onClose, title }) {
         >
           <HiXMark className="w-8 h-8" />
         </button>
-        {title && <h2 className="text-lg font-semibold mb-4">{title}</h2>}
+        {title && <h2 className="text-xxl font-semibold mb-4">{title}</h2>}
         {children}
       </div>
     </div>

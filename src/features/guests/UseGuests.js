@@ -1,7 +1,8 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getGuests } from "../../services/apiGuests";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getGuests, updateGuest } from "../../services/apiGuests";
 import { useSearchParams } from "react-router-dom";
 import { BOOKINGS_PER_PAGE } from "../../utils/constants";
+import toast from "react-hot-toast";
 
 export function useGuests() {
   const queryClient = useQueryClient();
@@ -27,4 +28,22 @@ export function useGuests() {
   }
 
   return guests;
+}
+
+export function useUpdateGuest() {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: ({ id, updatedGuest }) => updateGuest(id, updatedGuest),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["guests"] });
+      toast.success("Guest updated successfully");
+    },
+    onError: (error) => {
+      console.error(error);
+      toast.error("Unable to update guest");
+    },
+  });
+
+  return mutation;
 }
