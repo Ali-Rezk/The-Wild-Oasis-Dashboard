@@ -2,9 +2,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import toast from "react-hot-toast";
 import {
+  createBooking,
   deleteBooking,
   getBooking,
   getBookings,
+  updateBooking,
 } from "../../services/apiBookings";
 import { useParams, useSearchParams } from "react-router-dom";
 import { BOOKINGS_PER_PAGE } from "../../utils/constants";
@@ -71,4 +73,37 @@ export function useDeleteBooking() {
   });
 
   return mutateDeleteBooking;
+}
+
+export function useCreateBooking() {
+  const queryClient = useQueryClient();
+  const mutateCreateBooking = useMutation({
+    mutationFn: createBooking,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["bookings"]);
+      toast.success("Booking created successfully");
+    },
+    onError: (error) => {
+      console.error(error);
+      toast.error("Unable to create booking");
+    },
+  });
+
+  return mutateCreateBooking;
+}
+
+export function useUpdateBooking() {
+  const queryClient = useQueryClient();
+  const mutateUpdateBooking = useMutation({
+    mutationFn: ({ id, obj }) => updateBooking(id, obj),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["bookings"]);
+      toast.success("Booking updated successfully");
+    },
+    onError: (error) => {
+      console.error(error);
+      toast.error("Unable to update booking");
+    },
+  });
+  return mutateUpdateBooking;
 }
