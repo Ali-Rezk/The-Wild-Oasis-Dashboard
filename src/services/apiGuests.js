@@ -46,3 +46,23 @@ export async function updateGuest(id, updatedGuest) {
   }
   return data;
 }
+
+export async function createGuest(newGuest) {
+  const countryCode = getIso2Code(newGuest.nationality);
+  newGuest = {
+    ...newGuest,
+    countryFlag: countryCode ? `https://flagcdn.com/${countryCode}.svg` : null,
+  };
+
+  const { data, error } = await supabase
+    .from("guests")
+    .insert(newGuest)
+    .select()
+    .single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Unable to create guest");
+  }
+  return data;
+}

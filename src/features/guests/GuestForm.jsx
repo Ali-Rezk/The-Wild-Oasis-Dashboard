@@ -4,7 +4,7 @@ import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Button from "../../ui/Button";
-import { useUpdateGuest } from "./UseGuests";
+import { useCreateGuest, useUpdateGuest } from "./UseGuests";
 import SpinnerMini from "../../ui/SpinnerMini";
 
 const countryNames = Object.values(countries)
@@ -12,15 +12,22 @@ const countryNames = Object.values(countries)
   .sort();
 
 export default function GuestForm({ guest, onClose }) {
+  const isEditMode = Boolean(guest);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ defaultValues: guest });
+  } = useForm({ defaultValues: guest || {} });
   const { mutate: updateGuest, isPending: isUpdating } = useUpdateGuest();
 
+  const { mutate: createGuest } = useCreateGuest();
+
   function onSubmit(data) {
-    updateGuest({ id: guest.id, updatedGuest: data }, { onSuccess: onClose });
+    if (isEditMode) {
+      updateGuest({ id: guest.id, updatedGuest: data }, { onSuccess: onClose });
+    } else {
+      createGuest(data, { onSuccess: onClose });
+    }
   }
 
   return (
