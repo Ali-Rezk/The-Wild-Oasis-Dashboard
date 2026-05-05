@@ -5,8 +5,8 @@ const TableContext = createContext();
 function Table({ className, children, columns }) {
   return (
     <TableContext.Provider className={className} value={{ columns }}>
-      <div className="border border-grey-200 text-[1.4rem] bg-grey-0 rounded-[7px] overflow-hidden overflow-x-auto">
-        <div className="min-w-max">{children}</div>
+      <div className="border border-grey-200 text-[1.4rem] bg-grey-0 rounded-[7px] overflow-x-auto">
+        <div className="">{children}</div>
       </div>
     </TableContext.Provider>
   );
