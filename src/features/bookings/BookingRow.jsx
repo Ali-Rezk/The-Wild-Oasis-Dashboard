@@ -10,8 +10,11 @@ import { Navigate, useNavigate } from "react-router-dom";
 import {
   HiArrowDownOnSquare,
   HiArrowUpOnSquare,
+  HiPencil,
   HiTrash,
 } from "react-icons/hi2";
+import Modal from "../../ui/Modal";
+import CreateBookingForm from "./CreateBookingForm";
 import { useCheckout } from "../check-in-out/useCheckin-out";
 import { useDeleteBooking } from "./bookingshooks";
 import ConfirmDelete from "../../ui/ConfirmDelete";
@@ -25,6 +28,7 @@ function BookingRow({ booking }) {
   };
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
 
   const navigate = useNavigate();
   const { mutate: checkout, isPending } = useCheckout();
@@ -67,6 +71,9 @@ function BookingRow({ booking }) {
         {formatCurrency(booking.totalPrice)}
       </div>
       <div className="flex gap-5 justify-center items-center">
+        <button onClick={() => setEditModalOpen(true)} title="Edit booking">
+          <HiPencil className="text-[1.8rem] text-brand-500 cursor-pointer" />
+        </button>
         <button onClick={() => navigate(`/bookings/${booking.id}`)}>
           <HiEye className="text-[1.8rem] text-blue-500 cursor-pointer" />
         </button>
@@ -91,6 +98,17 @@ function BookingRow({ booking }) {
           disabled={isDeleting}
           closeModal={() => setDeleteModalOpen(false)}
         />
+      )}
+      {editModalOpen && (
+        <Modal
+          title={`Edit Booking #${booking.id}`}
+          onClose={() => setEditModalOpen(false)}
+        >
+          <CreateBookingForm
+            booking={booking}
+            onCloseModal={() => setEditModalOpen(false)}
+          />
+        </Modal>
       )}
     </Table.Row>
   );
