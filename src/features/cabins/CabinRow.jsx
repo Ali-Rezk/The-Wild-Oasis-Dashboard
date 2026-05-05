@@ -1,4 +1,4 @@
-import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
+import { HiEye, HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { formatCurrency } from "../../utils/helpers";
 import SpinnerMini from "../../ui/SpinnerMini";
 import CreateCabinForm from "./CreateCabinForm";
@@ -8,11 +8,13 @@ import { useState } from "react";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
+import CabinDetails from "./CabinDetails";
 
 function CabinRow({ cabin, onUpdate, setCabin }) {
   const { mutate: deleteCabin, isPending: isDeletePending } = useDeleteCabin();
   const { mutate, isPending: isCreatePending } = useCreateUpdateCabin();
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [detailsModalOpen, setDetailsModalOpen] = useState(false);
 
   function handleCreateCopy() {
     mutate({
@@ -32,7 +34,7 @@ function CabinRow({ cabin, onUpdate, setCabin }) {
       <div>
         <img
           src={cabin.image}
-          className="block w-[6.4rem] aspect-3/2 object-cover object-center scale-150 -translate-x-1.75"
+          className="block w-50 aspect-3/2 object-cover object-center  "
         />
       </div>
       <div className="text-[1.6rem] text-left font-semibold text-grey-600 font-['Sono']">
@@ -52,6 +54,12 @@ function CabinRow({ cabin, onUpdate, setCabin }) {
         )}
       </div>
       <div>
+        <button
+          className="p-2 rounded text-grey-600 hover:bg-grey-100"
+          onClick={() => setDetailsModalOpen(true)}
+        >
+          <HiEye className="w-5 h-5" />
+        </button>
         <button
           className="p-2 rounded text-purple-600 hover:bg-purple-50"
           onClick={handleCreateCopy}
@@ -91,6 +99,14 @@ function CabinRow({ cabin, onUpdate, setCabin }) {
             disabled={isDeletePending}
             closeModal={() => setDeleteModalOpen(false)}
           />
+        )}
+        {detailsModalOpen && (
+          <Modal
+            title={`Cabin ${cabin.name}`}
+            onClose={() => setDetailsModalOpen(false)}
+          >
+            <CabinDetails cabin={cabin} />
+          </Modal>
         )}
       </div>
     </Table.Row>
