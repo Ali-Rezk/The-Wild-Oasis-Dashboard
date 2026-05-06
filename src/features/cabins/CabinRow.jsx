@@ -34,7 +34,7 @@ function CabinRow({ cabin, onUpdate, setCabin }) {
       <div>
         <img
           src={cabin.image}
-          className="block w-50 aspect-3/2 object-cover object-center  "
+          className="block w-50 aspect-3/2 object-cover object-center rounded-[5px]"
         />
       </div>
       <div className="text-[1.6rem] text-left font-semibold text-grey-600 font-['Sono']">

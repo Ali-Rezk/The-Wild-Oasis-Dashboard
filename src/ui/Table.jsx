@@ -2,11 +2,11 @@ import { createContext, useContext } from "react";
 
 const TableContext = createContext();
 
-function Table({ className, children, columns }) {
+function Table({ className, children, columns, minWidth = "min-w-max" }) {
   return (
     <TableContext.Provider className={className} value={{ columns }}>
       <div className="border border-grey-200 text-[1.4rem] bg-grey-0 rounded-[7px] overflow-x-auto">
-        <div className="">{children}</div>
+        <div className={minWidth}>{children}</div>
       </div>
     </TableContext.Provider>
   );

@@ -28,21 +28,21 @@ export default function GuestsModal({ onSelect, onClose }) {
   }
 
   return (
-    <div className="min-w-240">
-      <div className="mb-4">
+    <div className="min-w-full overflow-auto">
+      <div className="mb-4 w-full">
         <Input
           type="text"
           placeholder="Search by name, email or national ID..."
           value={search}
           onChange={handleSearchChange}
-          className="w-full"
+          className="w-1/2"
         />
       </div>
 
       {isLoading ? (
         <Spinner />
       ) : (
-        <Table columns="grid-cols-[2fr_1fr_1fr_auto]">
+        <Table columns="grid-cols-[1fr_1fr_1fr_.5fr]" className="w-full">
           <Table.Header>
             <div>Guest</div>
             <div>Nationality</div>
@@ -131,4 +131,3 @@ export default function GuestsModal({ onSelect, onClose }) {
     </div>
   );
 }
-

@@ -1,7 +1,8 @@
 import { HiXMark } from "react-icons/hi2";
+import { createPortal } from "react-dom";
 
 export default function Modal({ children, onClose, title }) {
-  return (
+  return createPortal(
     <div
       onClick={onClose}
       className="fixed inset-0 w-full h-screen bg-(--backdrop-color) backdrop-blur-md z-1000 transition-all duration-500"
@@ -19,6 +20,7 @@ export default function Modal({ children, onClose, title }) {
         {title && <h2 className="text-xxl font-semibold mb-4">{title}</h2>}
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

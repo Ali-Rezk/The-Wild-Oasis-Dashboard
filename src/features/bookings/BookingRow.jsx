@@ -41,10 +41,16 @@ function BookingRow({ booking }) {
 
   return (
     <Table.Row className={"[&_div]:text-center [&_span]:mx-auto w-full"}>
-      <div className="text-[1.6rem] font-semibold text-grey-600 font-['Sono']">
-        {booking.cabins.name}
+      <div className="flex items-center justify-between gap-2">
+        <img
+          src={booking.cabins.image}
+          alt={booking.cabins.name}
+          className="w-50 rounded-[5px]"
+        />
+        <div className="text-[1.6rem] font-semibold text-grey-600 font-['Sono']">
+          {booking.cabins.name}
+        </div>
       </div>
-
       <div className="flex flex-col gap-[0.2rem] [&_span:first-child]:font-medium [&_span:last-child]:text-grey-500 [&_span:last-child]:text-[1.2rem]">
         <span>{booking.guests.fullName}</span>
         <span>{booking.guests.email}</span>

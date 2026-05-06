@@ -10,10 +10,9 @@ export default function CabinsModal({ onSelect, onClose }) {
   if (isLoading) return <Spinner />;
 
   return (
-    <div className="min-w-240">
-      <Table columns="grid-cols-[6rem_2fr_1fr_1fr_auto]">
+    <div className="min-w-full overflow-auto">
+      <Table columns="grid-cols-[1.5fr_1fr_1fr_.5fr]">
         <Table.Header>
-          <div>Photo</div>
           <div>Cabin</div>
           <div>Capacity</div>
           <div>Price</div>
@@ -23,17 +22,21 @@ export default function CabinsModal({ onSelect, onClose }) {
           data={cabins}
           render={(cabin) => (
             <Table.Row key={cabin.id}>
-              <div>
-                <img
-                  src={cabin.image}
-                  alt={cabin.name}
-                  className="w-20 aspect-3/2 object-cover rounded"
-                />
+              <div className="flex items-center justify-between">
+                <div>
+                  <img
+                    src={cabin.image}
+                    alt={cabin.name}
+                    className="w-40 aspect-3/2 object-cover rounded"
+                  />
+                </div>
+                <div className="font-semibold text-grey-700 font-['Sono']">
+                  {cabin.name}
+                </div>
               </div>
-              <div className="font-semibold text-grey-700 font-['Sono']">
-                {cabin.name}
+              <div className="text-grey-600">
+                Up to {cabin.maxCapacity} guests
               </div>
-              <div className="text-grey-600">Up to {cabin.maxCapacity} guests</div>
               <div className="font-['Sono']">
                 <span>{formatCurrency(cabin.regularPrice)}</span>
                 {cabin.discount > 0 && (
@@ -42,18 +45,16 @@ export default function CabinsModal({ onSelect, onClose }) {
                   </span>
                 )}
               </div>
-              <div>
-                <Button
-                  size="small"
-                  type="button"
-                  onClick={() => {
-                    onSelect(cabin);
-                    onClose();
-                  }}
-                >
-                  Select
-                </Button>
-              </div>
+              <Button
+                size="small"
+                type="button"
+                onClick={() => {
+                  onSelect(cabin);
+                  onClose();
+                }}
+              >
+                Select
+              </Button>
             </Table.Row>
           )}
         />
@@ -61,4 +62,3 @@ export default function CabinsModal({ onSelect, onClose }) {
     </div>
   );
 }
-
